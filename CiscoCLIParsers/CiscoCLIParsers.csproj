@@ -7,12 +7,11 @@
   <ItemGroup>
     <PackageReference Include="Pegasus" Version="4.1.0-alpha0007" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Pegasus\Pegasus.Common\Pegasus.Common.Core.csproj" />
-  </ItemGroup>
   <ItemGroup>
     <PegGrammar Include="Parsers\*.peg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Pegasus\Pegasus.Common\Pegasus.Common.Core.csproj" />
   </ItemGroup>
 
 </Project>
