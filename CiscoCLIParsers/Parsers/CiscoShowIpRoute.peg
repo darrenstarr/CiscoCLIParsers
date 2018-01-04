@@ -1,0 +1,159 @@
+﻿@namespace CiscoCLIParsers.Parsers
+@classname CiscoShowIpRoute
+@using CiscoCLIParsers.Model
+
+ShowIPRoute<ShowIPRouteEntry>
+ = CLICommand Codes WS lr:LastResort routes:Route* CiscoPrompt EOF { 
+     new ShowIPRouteEntry {
+       LastResort = lr,
+       Routes = MergeRoutes(routes)
+     } 
+   }
+  
+CLICommand
+ = 'show ip route'
+ 
+Codes
+ = WS 'Codes:' ToEndOfLine+
+
+// Gateway of last resort is 10.100.0.1 to network 0.0.0.0 
+LastResort<ShowIPRouteLastResort>
+ = 'Gateway of last resort is' WS gw:IPAddress WS 'to network' WS net:IPAddress WS { new ShowIPRouteLastResort { Gateway=gw, Network=net } }
+ / 'Gateway of last resort is not set' WS { new ShowIPRouteLastResort { } }
+ 
+Route<List<ShowIPRouteEntryItem>>
+ = code:Code pref:Prefix nh:NextHop* { new List<ShowIPRouteEntryItem> { new ShowIPRouteEntryItem { Code=code, Prefix=pref, NextHops=new List<ShowIPRouteNextHop>(nh) } } }
+ / SubnettedNetwork 
+ 
+NextHop<ShowIPRouteNextHop>
+ = nho:NHO? rm:RouteMetric via:Via? uptime:Uptime? inter:OutgoingInterface? WS? {
+      new ShowIPRouteNextHop {
+        NextHopOverride = nho.Count > 0 ? true : false,
+        RouteMetric = rm,
+        Via = via.Count > 0 ? via[0] : System.Net.IPAddress.Any,
+        Uptime = (uptime.Count > 0) ? uptime[0] : new DateTime(0), 
+        OutgoingInterface = inter.Count > 0 ? inter[0] : null
+      }
+    }
+ 
+// TODO : Figure out if variably subnetted networks need better processing
+SubnettedNetwork<List<ShowIPRouteEntryItem>>
+ = Prefix 'is variably subnetted,' WS Number WS 'subnets,' WS Number WS 'masks' WS routes:Route+ { MergeRoutes(routes) }
+ / pre:Prefix 'is subnetted,' WS Number WS 'subnets' WS routes:Route+ { ApplyPrefixLength(MergeRoutes(routes), pre) }
+ 
+Code<ShowIPRouteCode>
+ = nho:NextHopOverride? pc:ProtocolCode WS? cand:CandidateDefault? pm:ProtocolModifier? rep:ReplicatedRoute? WS? {
+     new ShowIPRouteCode {
+       NextHopOverride = nho.Count > 0 ? true : false,
+       Protocol = pc,
+       Candidate = cand.Count > 0 ? true : false,
+       Suffix = pm.Count > 0 ? pm[0] : ERoutingProtocol.Unspecified,
+       Replicated = rep.Count > 0 ? true : false
+     }    
+   }
+ 
+NextHopOverride
+ = '%' WS?
+
+NHO
+ = '[NHO]'
+
+ProtocolCode<ERoutingProtocol>
+ = 'L' { ERoutingProtocol.Local }
+ / 'C' { ERoutingProtocol.Connected }
+ / 'S' { ERoutingProtocol.Static }
+ / 'R' { ERoutingProtocol.RIP }
+ / 'M' { ERoutingProtocol.Mobile }
+ / 'B' { ERoutingProtocol.BGP }
+ / 'D' { ERoutingProtocol.EIGRP }
+ / 'O' { ERoutingProtocol.OSPF }
+ / 'i' { ERoutingProtocol.ISIS }
+ / 'o' { ERoutingProtocol.ODR }
+ / 'P' { ERoutingProtocol.PeriodicDownloadStatic }
+ / 'H' { ERoutingProtocol.NHRP }
+ / 'l' { ERoutingProtocol.LISP }
+ / 'U' { ERoutingProtocol.PerUserStatic }
+ 
+CandidateDefault
+ = '*'
+ 
+ProtocolModifier<ERoutingProtocol>
+ = 'EX' { ERoutingProtocol.EIGRPExternal }
+ / 'IA' { ERoutingProtocol.OSPFInterarea }
+ / 'N1' { ERoutingProtocol.OSPFNSSAType1External }
+ / 'N2' { ERoutingProtocol.OSPFNSSAType2External }
+ / 'E1' { ERoutingProtocol.OSPFType1External }
+ / 'E2' { ERoutingProtocol.OSPFType2External }
+ / 'su' { ERoutingProtocol.ISISSummary }
+ / 'L1' { ERoutingProtocol.ISISLevel1 }
+ / 'L2' { ERoutingProtocol.ISISLevel2 }
+ / 'ia' { ERoutingProtocol.ISISInterarea }
+
+ReplicatedRoute
+ = '+'
+ 
+Prefix<NetworkPrefix>
+ = net:IPAddress '/' len:Number WS? { new NetworkPrefix { NetworkAddress = net, Length = len } } 
+ / net:IPAddress WS? { NetworkPrefix.FromClassful(net) }
+ 
+RouteMetric<NetworkRouteMetric>
+ = '[' ad:Number '/' met:Number ']' WS? { new NetworkRouteMetric { DirectlyConnected=false, AdministrativeDistance=ad, Metric=met } }
+ / 'is directly connected' { new NetworkRouteMetric { DirectlyConnected=true, AdministrativeDistance=0, Metric=0 } }
+ 
+Via<System.Net.IPAddress>
+ = 'via' WS add:IPAddress WS? { add }
+ 
+// TODO : Figure out the proper format for Uptime
+Uptime<DateTime>
+ = ',' WS? i:UptimePart+ { UptimeToDateTime(i) }
+ / ',' WS? Number ':' Number ':' Number { new DateTime(0) }
+ 
+UptimePart<int>
+ = x:Number u:[ywmdhs] { UptimeToSeconds(x, u) } 
+
+OutgoingInterface<CiscoInterfaceId>
+	= ',' WS* a:InterfaceType b:InterfaceNumber { new CiscoInterfaceId { InterfaceType = a, InterfaceNumber = b } }
+	 
+InterfaceType<EInterfaceType>
+  = 'Vlan' { EInterfaceType.VLan }
+  / 'Ethernet' { EInterfaceType.Ethernet }
+  / 'FastEthernet' { EInterfaceType.FastEthernet }
+  / 'GigabitEthernet' { EInterfaceType.GigabitEthernet }
+  / 'Te' { EInterfaceType.TenGigabitEthernet }
+  / 'Port-channel' { EInterfaceType.PortChannel }
+  / 'Loopback' { EInterfaceType.Loopback }
+  / 'Tunnel' { EInterfaceType.Tunnel }
+  / 'Async' { EInterfaceType.Async }
+  / 'NVI' { EInterfaceType.NVI }
+  / 'ucse' { EInterfaceType.UCSE }
+  / 'Embedded-Service-Engine' { EInterfaceType.EmbeddedServicesEngine }
+  / 'Null' { EInterfaceType.Null }
+
+InterfaceNumber<CiscoInterfaceNumber>
+	= a:Number '/' b:Number '/' c:Number '/' d:Number { new CiscoInterfaceNumber { Chassis=a, LineCard=b, Module=c, Port=d } }
+	/ a:Number '/' b:Number '/' c:Number { new CiscoInterfaceNumber { LineCard=a, Module=b, Port=c } }
+	/ a:Number '/' b:Number { new CiscoInterfaceNumber { Module=a, Port=b } }
+	/ a:Number { new CiscoInterfaceNumber { Port=a } }
+
+IPAddress<System.Net.IPAddress>
+ = a:Octet '.' b:Octet '.' c:Octet '.' d:Octet { new System.Net.IPAddress(new byte[] { Convert.ToByte(a), Convert.ToByte(b), Convert.ToByte(c), Convert.ToByte(d) }) }
+ 
+Octet<int>
+ = Number
+ 
+ToEndOfLine
+ = [^\r\n]+[\r]?[\n]
+
+WS
+ = [ \t\r\n]+
+ 
+Number<int>
+ = i:[0-9]+ { Convert.ToInt32(string.Concat(i)) }
+ 
+CiscoPrompt
+	    = [A-Za-z][A-Za-z0-9-_]*[#>]
+
+EOF 
+	= !.
+
+ 

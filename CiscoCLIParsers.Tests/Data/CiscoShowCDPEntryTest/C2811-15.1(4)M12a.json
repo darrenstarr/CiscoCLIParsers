@@ -1,0 +1,59 @@
+﻿[
+  {
+    "DeviceID": "r1234001.nm.local",
+    "EntryAddresses": [
+      "172.20.2.2"
+    ],
+    "Platform": "Platform: Cisco 1841",
+    "Capabilities": [
+      "Router",
+      "Switch",
+      "IGMP"
+    ],
+    "Interface": "FastEthernet0/0",
+    "PortId": "FastEthernet0/1",
+    "HoldTime": 176,
+    "VersionText": "Cisco IOS Software, 1841 Software (C1841-ADVENTERPRISEK9-M), Version 15.1(4)M12a, RELEASE SOFTWARE (fc1)\r\nTechnical Support: http://www.cisco.com/techsupport\r\nCopyright (c) 1986-2016 by Cisco Systems, Inc.\r\nCompiled Tue 04-Oct-16 03:13 by prod_rel_team\r\n",
+    "AdvertisementVersion": 2,
+    "AdvertisementExtras": [
+      {
+        "VTPManagementDomain": ""
+      },
+      {
+        "Duplex": "Full"
+      }
+    ]
+  },
+  {
+    "DeviceID": "TORSW.minions.com",
+    "EntryAddresses": [
+      "10.100.5.2"
+    ],
+    "Platform": "Platform: cisco WS-C3560-24PS",
+    "Capabilities": [
+      "Router",
+      "Switch",
+      "IGMP"
+    ],
+    "Interface": "FastEthernet0/1",
+    "PortId": "FastEthernet0/1",
+    "HoldTime": 157,
+    "VersionText": "Cisco IOS Software, C3560 Software (C3560-IPSERVICESK9-M), Version 12.2(55)SE11, RELEASE SOFTWARE (fc3)\r\nTechnical Support: http://www.cisco.com/techsupport\r\nCopyright (c) 1986-2016 by Cisco Systems, Inc.\r\nCompiled Wed 17-Aug-16 13:07 by prod_rel_team\r\n",
+    "AdvertisementVersion": 2,
+    "AdvertisementExtras": [
+      {
+        "Name": "protocol hello",
+        "Value": "Protocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF010221FF0000000000000015F96DC200FF0000\r\n"
+      },
+      {
+        "VTPManagementDomain": ""
+      },
+      {
+        "NativeVLAN": 1
+      },
+      {
+        "Duplex": "Full"
+      }
+    ]
+  }
+]

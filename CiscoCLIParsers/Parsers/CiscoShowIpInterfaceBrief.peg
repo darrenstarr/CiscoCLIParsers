@@ -1,0 +1,162 @@
+﻿@namespace CiscoCLIParsers.Parsers
+@classname CiscoShowIpInterfaceBrief
+@using CiscoCLIParsers.Model
+@using System.Net;
+
+Interfaces<List<ShowIpInterfaceBriefItem>>
+	= CLICommand TableHeader e:Entry* ciscoPrompt EOF { new List<ShowIpInterfaceBriefItem>(e) }
+	 	 
+CLICommand
+	= Line* 'show ip interface brief'
+	
+Line
+	= [^n]*[\n]
+	 
+TableHeader
+	= WS 'Interface' WS 'IP-Address' WS 'OK?' WS 'Method' WS 'Status' WS 'Protocol' WS
+	
+Entry<ShowIpInterfaceBriefItem>
+	= id:Interface WS ip:IPAddressField WS ok:OKState WS meth:Method WS stat:Status WS prot:Protocol WS {
+		new ShowIpInterfaceBriefItem {
+			InterfaceId = id,
+			Address = ip,
+			Ok = ok,
+			Method = meth,
+			Status = stat,
+			ProtocolStatus = prot
+		}
+	}
+	 
+Interface<CiscoInterfaceId>
+	= a:InterfaceType b:InterfaceNumber { new CiscoInterfaceId { InterfaceType = a, InterfaceNumber = b } }
+	 
+InterfaceType 
+	= VLanInterface
+	/ EthernetInterface
+	/ FastEthernetInterface
+	/ GigabitEthernetInterface
+	/ TenGigabitEthernetInterface
+	/ PortchannelInterface
+	/ LoopbackInterface
+	/ TunnelInterface
+	/ AsyncInterface
+	/ NVIInterface
+	/ UCSEInterface
+	/ EmbeddedServicesEngineInterface
+	/ NullInterface
+
+VLanInterface<EInterfaceType>
+	= 'Vlan' { EInterfaceType.VLan }
+	 
+EthernetInterface<EInterfaceType>
+	= 'Ethernet' { EInterfaceType.Ethernet }
+	 
+FastEthernetInterface<EInterfaceType>
+	= 'FastEthernet' { EInterfaceType.FastEthernet }
+	 
+GigabitEthernetInterface<EInterfaceType>
+	= 'GigabitEthernet' { EInterfaceType.GigabitEthernet }
+
+TenGigabitEthernetInterface<EInterfaceType>
+	= 'Te' { EInterfaceType.TenGigabitEthernet }
+ 
+PortchannelInterface<EInterfaceType>
+	= 'Port-channel' { EInterfaceType.PortChannel }
+ 
+LoopbackInterface<EInterfaceType>
+	= 'Loopback' { EInterfaceType.Loopback }
+ 
+TunnelInterface<EInterfaceType>
+	= 'Tunnel' { EInterfaceType.Tunnel }
+ 
+AsyncInterface<EInterfaceType>
+	= 'Async' { EInterfaceType.Async }
+
+NVIInterface<EInterfaceType>
+	= 'NVI' { EInterfaceType.NVI }
+
+UCSEInterface<EInterfaceType>
+	= 'ucse' { EInterfaceType.UCSE }
+
+EmbeddedServicesEngineInterface<EInterfaceType>
+	= 'Embedded-Service-Engine' { EInterfaceType.EmbeddedServicesEngine }
+
+NullInterface<EInterfaceType>
+    = 'null' { EInterfaceType.Null }
+
+InterfaceNumber<CiscoInterfaceNumber>
+	= a:Number '/' b:Number '/' c:Number '/' d:Number { new CiscoInterfaceNumber { Chassis=a, LineCard=b, Module=c, Port=d } }
+	/ a:Number '/' b:Number '/' c:Number { new CiscoInterfaceNumber { LineCard=a, Module=b, Port=c } }
+	/ a:Number '/' b:Number { new CiscoInterfaceNumber { Module=a, Port=b } }
+	/ a:Number { new CiscoInterfaceNumber { Port=a } }
+ 
+IPAddressField<IPAddress>
+	= a:Unassigned { a }
+	/ a:IPAddress { a }
+ 
+Unassigned<IPAddress>
+	= 'unassigned' { null }
+ 
+IPAddress<IPAddress>
+	= a:Number '.' b:Number '.' c:Number '.' d:Number { new IPAddress(new byte[] { Convert.ToByte(a), Convert.ToByte(b), Convert.ToByte(c), Convert.ToByte(d) }) }
+ 
+OKState
+	= YES
+	/ NO
+ 
+Method
+	= NVRAM
+	/ DHCP
+	/ Unset
+	/ Manual
+ 
+Status
+	= Up
+	/ Down
+	/ AdministrativelyDown
+ 
+Protocol
+	= Up
+	/ Down
+ 
+Up<EInterfaceStatus>
+	= 'up' { EInterfaceStatus.Up }
+ 
+Down<EInterfaceStatus>
+	= 'down' { EInterfaceStatus.Down }
+ 
+AdministrativelyDown<EInterfaceStatus>
+	= 'administratively down' { EInterfaceStatus.AdministrativelyDown }
+ 
+NVRAM<EAddressAssignmentMethod>
+	= 'NVRAM' { EAddressAssignmentMethod.NVRAM }
+
+DHCP<EAddressAssignmentMethod>
+	= 'DHCP' { EAddressAssignmentMethod.DHCP }
+ 
+Unset<EAddressAssignmentMethod>
+	= 'unset' { EAddressAssignmentMethod.Unset }
+ 
+Manual<EAddressAssignmentMethod>
+	= 'manual' { EAddressAssignmentMethod.Manual }
+
+YES<bool>
+	= 'YES' { true }
+
+NO<bool>
+	= 'NO' { false }
+ 
+Number<int>
+	= i:Digit+ { Convert.ToInt32(string.Concat(i)) }
+ 
+Digit
+	= [0-9]
+	 
+WS
+	= [ \t\n\r]+
+
+ciscoPrompt
+	    = [A-Za-z][A-Za-z0-9-_]*[#>]
+
+EOF 
+	= !.

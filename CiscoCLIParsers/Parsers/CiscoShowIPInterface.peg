@@ -1,0 +1,340 @@
+﻿@namespace CiscoCLIParsers.Parsers
+@classname CiscoShowIPInterface
+@using CiscoCLIParsers.Model
+
+ShowInterfaces <List<ShowIPInterfaceItem>>
+ = CLICommand i:Interface*  { new List<ShowIPInterfaceItem>(i) }
+ 
+CLICommand
+ = 'show ip interface' WS? 
+ 
+Interface<ShowIPInterfaceItem>
+ = iid:InterfaceID WS? 'is' WS? 
+   ls:LineStatus 
+   ps:ProtocolStatus 
+   ipp:InternetProtocolParsing?
+   ipad:InternetAddress?
+   ipadu:InternetAddressUnnumbered?
+   ba:BroadcastAddress?
+   adb:AddressDeterminedBy?
+   mtu:MTU?
+   ha:HelperAddress?
+   dbf:DirectedBroadcastForwarding?
+   mrgj:MulticastReservedGroupsJoined?
+   oal:OutgoingAccessList?
+   ial:InboundAccessList?
+   pa:ProxyARP?
+   lpa:LocalProxyARP?
+   sl:SecurityLevel?
+   sh:SplitHorizon?
+   ir:ICMPRedirects?
+   iu:ICMPUnreachables?
+   imr:ICMPMaskReplies?
+   ifs:IPFastSwitching?
+   ifso:IPFastSwitchingOnSameInterface?
+   ipfl:IPFlowSwitching?
+   ics:IPCEFSwitching?
+   icstv:IPCEFSwitchingTurboVector?
+   intv:IPNullTurboVector?
+   IPNullTurboVector?
+   imfs:IPMulticastFastSwitching?
+   imdfs:IPMulticastDistributedFastSwitching?
+   ircf:IPRouteCacheFlags?
+   rd:RouterDiscovery?
+   iopa:IPOutputPacketAccounting?
+   iava:IPAccessViolationAccounting?
+   thc:TCPIPHeaderCompression?
+   rhc:RTPIPHeaderCompression?
+   ppn:ProbeProxyNames?
+   pr:PolicyRouting?
+   nat:NetworkAddressTranslation?
+   bpm:BGPPolicyMapping?
+   infe:InputFeatures?
+   oufe:OutputFeatures?
+   wro:WCCPRedirectOutbound?
+   wri:WCCPRedirectInbound?
+   wre:WCCPRedirectExclude? {
+     new ShowIPInterfaceItem {
+        InterfaceId = iid,
+        LineStatus = ls,
+        ProtocolStatus = ps,
+        InternetProtocolParsing = ipp.Count > 0 ? ipp[0] : EEnabledState.Unknown,
+        InternetAddress = ipad.Count > 0 ? ipad[0] : null,
+        InternetAddressUnnumbered = ipadu.Count > 0 ? ipadu[0] : null,
+        BroadcastAddress = ba.Count > 0 ? ba[0] : System.Net.IPAddress.None,
+        AddressDeterminedBy = adb.Count > 0 ? adb[0] : EAddressAssignmentMethod.Unset,
+        MTU = mtu.Count > 0 ? mtu[0] : -1,
+        HelperAddress = ha.Count > 0 ? ha[0] : System.Net.IPAddress.None,
+        DirectedBroadcastForwarding = dbf.Count > 0 ? dbf[0] : EEnabledState.Unknown,
+        MulticastReservedGroupsJoined = mrgj.Count > 0 ? mrgj[0] : null,
+        OutgoingAccessList = oal.Count > 0 ? oal[0] : "",
+        InboundAccessList = ial.Count > 0 ? ial[0] : "",
+        ProxyARP = pa.Count > 0 ? pa[0] : EEnabledState.Unknown,
+        LocalProxyARP = lpa.Count > 0 ? lpa[0] : EEnabledState.Unknown,
+        SecurityLevel = sl.Count > 0 ? sl[0] : EIPSecurityLevelSetting.Unknown,
+        SplitHorizon = sh.Count > 0 ? sh[0] : EEnabledState.Unknown,
+        ICMPRedirects = ir.Count > 0 ? ir[0] : ESentWhen.Unknown,
+        ICMPUnreachables = iu.Count > 0 ? iu[0] : ESentWhen.Unknown,
+        ICMPMaskReplies = imr.Count > 0 ? imr[0] : ESentWhen.Unknown,
+        IPFastSwitching = ifs.Count > 0 ? ifs[0] : EEnabledState.Unknown,
+        IPFastSwitchingOnSameInterface = ifso.Count > 0 ? ifso[0] : EEnabledState.Unknown,
+        IPFlowSwitching = ipfl.Count > 0 ? ipfl[0] : EEnabledState.Unknown,
+        IPCEFSwitching = ics.Count > 0 ? ics[0] : EEnabledState.Unknown,
+        IPCEFSwitchingTurboVector = icstv.Count > 0 ? EEnabledState.Enabled : EEnabledState.Unknown,
+        IPNullTurboVector = intv.Count > 0 ? EEnabledState.Enabled : EEnabledState.Unknown,
+        IPMulticastFastSwitching = imfs.Count > 0 ? imfs[0] : EEnabledState.Unknown,
+        IPMulticastDistributedFastSwitching = imdfs.Count > 0 ? imdfs[0] : EEnabledState.Unknown,
+        IPRouteCacheFlags = ircf.Count > 0 ? ircf[0] : null,
+        RouterDiscovery = rd.Count > 0 ? rd[0] : EEnabledState.Enabled,
+        IPOutputPacketAccounting = iopa.Count > 0 ? iopa[0] : EEnabledState.Enabled,
+        IPAccessViolationAccounting = iava.Count > 0 ? iava[0] : EEnabledState.Enabled,
+        TCPIPHeaderCompression = thc.Count > 0 ? thc[0] : EEnabledState.Enabled,
+        RTPIPHeaderCompression = rhc.Count > 0 ? rhc[0] : EEnabledState.Enabled,
+        ProbeProxyNames = ppn.Count > 0 ? ppn[0] : EEnabledState.Enabled,
+        PolicyRouting = pr.Count > 0 ? pr[0] : EEnabledState.Enabled,
+        NetworkAddressTranslation = nat.Count > 0 ? nat[0] : EEnabledState.Enabled,
+        BGPPolicyMapping = bpm.Count > 0 ? bpm[0] : EEnabledState.Enabled,
+        InputFeatures = infe.Count > 0 ? infe[0] : null,
+        OutputFeatures = oufe.Count > 0 ? oufe[0] : null,
+        WCCPRedirectOutbound = wro.Count > 0 ? wro[0] : EEnabledState.Enabled,
+        WCCPRedirectInbound = wri.Count > 0 ? wri[0] : EEnabledState.Enabled,
+        WCCPRedirectExclude = wre.Count > 0 ? wre[0] : EEnabledState.Enabled
+     }
+   }
+
+InterfaceID<CiscoInterfaceId>
+  	= a:InterfaceType b:InterfaceNumber c:ChannelNumber? d:SubinterfaceNumber? { Common.Helpers.ToCiscoInterfaceId(a, b, c, d) }
+
+InterfaceType<EInterfaceType>
+  = 'Vlan' { EInterfaceType.VLan }
+  / 'Ethernet' { EInterfaceType.Ethernet }
+  / 'FastEthernet' { EInterfaceType.FastEthernet }
+  / 'GigabitEthernet' { EInterfaceType.GigabitEthernet }
+  / 'TenGigabitEthernet' { EInterfaceType.TenGigabitEthernet }
+  / 'Port-channel' { EInterfaceType.PortChannel }
+  / 'Loopback' { EInterfaceType.Loopback }
+  / 'Tunnel' { EInterfaceType.Tunnel }
+  / 'Async' { EInterfaceType.Async }
+  / 'NVI' { EInterfaceType.NVI }
+  / 'ucse' { EInterfaceType.UCSE }
+  / 'Embedded-Service-Engine' { EInterfaceType.EmbeddedServicesEngine }
+  / 'BRI' { EInterfaceType.BasicRateInterface }
+  / 'Null' { EInterfaceType.Null }
+
+InterfaceNumber<CiscoInterfaceNumber>
+	= a:Number '/' b:Number '/' c:Number '/' d:Number { new CiscoInterfaceNumber { Chassis=a, LineCard=b, Module=c, Port=d } }
+	/ a:Number '/' b:Number '/' c:Number { new CiscoInterfaceNumber { LineCard=a, Module=b, Port=c } }
+	/ a:Number '/' b:Number { new CiscoInterfaceNumber { Module=a, Port=b } }
+	/ a:Number { new CiscoInterfaceNumber { Port=a } }
+  	
+SubinterfaceNumber<int>
+  = '.' i:Number { i }
+
+ChannelNumber<int>
+  = ':' i:Number { i }
+ 
+LineStatus<EInterfaceStatus>
+  = i:InterfaceState Comma WS? { i }
+  
+ProtocolStatus<EInterfaceStatus>
+  = 'line protocol is' WS? ps:InterfaceState WS? { ps }
+  
+InterfaceState<EInterfaceStatus>
+  	= 'up' (WS? '(connected)')? { EInterfaceStatus.Up }
+  	/ 'down' (WS? '(notconnect)')? { EInterfaceStatus.Down }
+  	/ 'administratively down' { EInterfaceStatus.AdministrativelyDown }
+
+InternetProtocolParsing<EEnabledState>
+  = 'Internet protocol processing' WS? es:EnabledState WS? { es }
+  
+InternetAddress<NetworkPrefix>
+  = 'Internet address is' WS? pref:Prefix { pref }
+  
+Prefix<NetworkPrefix>
+ = na:IPAddress '/' len:Number WS? { new NetworkPrefix { NetworkAddress = na, Length = len } }
+
+IPAddress<System.Net.IPAddress>
+ = ip:(Octet '.' Octet '.' Octet '.' Octet) WS? { System.Net.IPAddress.Parse(ip) }
+ 
+Octet
+ = '25' [0-5]
+ / '2' [0-4][0-9]
+ / [0-1][0-9][0-9]
+ / [0-9][0-9]?
+
+InternetAddressUnnumbered<IPAddressUnnumbered>
+ = 'Interface is unnumbered. Using address of' WS? intf:InterfaceID WS? '(' ip:IPAddress ')' WS? {
+   new IPAddressUnnumbered {
+     Address = ip,
+     Interface = intf
+   }
+ }
+
+BroadcastAddress<System.Net.IPAddress>
+  = 'Broadcast address is' WS? ip:IPAddress WS? { ip }
+  
+EnabledState<EEnabledState>
+  = 'enabled' { EEnabledState.Enabled }
+  / 'disabled' { EEnabledState.Disabled }
+ 
+AddressDeterminedBy<EAddressAssignmentMethod>
+  = 'Address determined by' WS? eam:AddressAssignmentMethod WS? { eam }
+  
+AddressAssignmentMethod<EAddressAssignmentMethod>
+  = 'non-volatile memory' { EAddressAssignmentMethod.NVRAM }
+  / 'DHCP' { EAddressAssignmentMethod.DHCP }
+  / 'setup command' { EAddressAssignmentMethod.SetupCommand }
+ 
+MTU<int>
+  = 'MTU is' WS? i:Number WS? 'bytes' WS? { i }
+  
+HelperAddress<System.Net.IPAddress>
+  = 'Helper address is' WS? ip:IPAddress? ('not set')? WS? {
+    ip.Count > 0 ? ip[0] : System.Net.IPAddress.None
+  }
+  
+DirectedBroadcastForwarding<EEnabledState>
+  = 'Directed broadcast forwarding is' WS? es:EnabledState WS? { es }
+ 
+MulticastReservedGroupsJoined<List<System.Net.IPAddress>>
+  = 'Multicast reserved groups joined:' WS? ips:IPAddress* WS? { new List<System.Net.IPAddress>(ips) }
+  
+OutgoingAccessList
+ = 'Outgoing access list is' WS? 'not set'? acl:AccessListName? WS? { acl.Count > 0 ? acl[0] : "" }
+ 
+InboundAccessList
+ = 'Inbound' WS? 'access list is' WS? 'not set'? acl:AccessListName? WS? { acl.Count > 0 ? acl[0] : "" }
+ 
+AccessListName
+ = i:[A-Za-z0-9-_]+ { string.Concat(i) }
+ 
+ProxyARP<EEnabledState>
+ = 'Proxy ARP is' WS? es:EnabledState WS? { es }
+ 
+LocalProxyARP<EEnabledState>
+ = 'Local Proxy ARP is' WS? es:EnabledState WS? { es }
+ 
+SecurityLevel<EIPSecurityLevelSetting>
+ = 'Security level is' WS? sl:SecurityLevelSetting WS? { sl }
+ 
+SecurityLevelSetting<EIPSecurityLevelSetting>
+ = 'default' { EIPSecurityLevelSetting.Default }
+ 
+SplitHorizon<EEnabledState>
+ = 'Split horizon is' WS? es:EnabledState WS? { es }
+ 
+ICMPRedirects<ESentWhen>
+ = 'ICMP redirects are' WS? sw:SentWhen WS? { sw }
+ 
+ICMPUnreachables<ESentWhen>
+ = 'ICMP unreachables are' WS? sw:SentWhen WS? { sw }
+ 
+ICMPMaskReplies<ESentWhen>
+ = 'ICMP mask replies are' WS? sw:SentWhen WS? { sw }
+ 
+SentWhen<ESentWhen>
+ = 'always sent' { ESentWhen.Always }
+ / 'never sent' { ESentWhen.Never }
+ 
+IPFastSwitching<EEnabledState>
+ = 'IP fast switching is' WS? es:EnabledState WS? { es }
+ 
+IPFastSwitchingOnSameInterface<EEnabledState>
+ = 'IP fast switching on the same interface is' WS? es:EnabledState WS? { es }
+ 
+IPFlowSwitching<EEnabledState>
+ = 'IP Flow switching is' WS? es:EnabledState WS? { es }
+ 
+IPCEFSwitching<EEnabledState>
+ = 'IP CEF switching is' WS? es:EnabledState WS? { es }
+
+IPCEFSwitchingTurboVector
+ = 'IP CEF switching turbo vector' WS?
+ 
+// TODO : Figure out why Cisco insists on sending this twice sometimes
+IPNullTurboVector
+ = 'IP Null turbo vector' WS?
+ 
+IPMulticastFastSwitching<EEnabledState>
+ = 'IP multicast fast switching is' WS? es:EnabledState WS? { es }
+ 
+IPMulticastDistributedFastSwitching<EEnabledState>
+ = 'IP multicast distributed fast switching is' WS? es:EnabledState WS? { es }
+ 
+IPRouteCacheFlags<List<EIPRouteCacheFlag>>
+ = 'IP route-cache flags are' WS? cf:IPRouteCacheFlag* WS? { new List<EIPRouteCacheFlag>(cf) }
+ 
+IPRouteCacheFlag<EIPRouteCacheFlag>
+ = 'Fast' Comma? WS? { EIPRouteCacheFlag.FastSwitching }
+ / 'CEF' Comma? WS? { EIPRouteCacheFlag.CEF }
+ 
+RouterDiscovery<EEnabledState>
+ = 'Router Discovery is' WS? es:EnabledState WS? { es }
+ 
+IPOutputPacketAccounting<EEnabledState>
+ = 'IP output packet accounting is' WS? es:EnabledState WS? { es }
+ 
+IPAccessViolationAccounting<EEnabledState>
+ = 'IP access violation accounting is' WS? es:EnabledState WS? { es }
+ 
+TCPIPHeaderCompression<EEnabledState>
+ = 'TCP/IP header compression is' WS? es:EnabledState WS? { es }
+ 
+RTPIPHeaderCompression<EEnabledState>
+ = 'RTP/IP header compression is' WS? es:EnabledState WS? { es }
+ 
+ProbeProxyNames<EEnabledState>
+ = 'Probe proxy name replies are' WS? es:EnabledState WS? { es }
+ 
+PolicyRouting<EEnabledState>
+ = 'Policy routing is' WS? es:EnabledState WS? { es }
+ 
+NetworkAddressTranslation<EEnabledState>
+ = 'Network address translation is' WS? es:EnabledState WS? { es }
+ 
+BGPPolicyMapping<EEnabledState>
+ = 'BGP Policy Mapping is' WS? es:EnabledState WS? { es }
+ 
+InputFeatures<List<EInterfaceIPInputFeature>>
+ = 'Input features:' WS? inf:InputFeature* WS? { new List<EInterfaceIPInputFeature>(inf) }
+ 
+InputFeature<EInterfaceIPInputFeature>
+ = 'MCI Check' Comma? WS? { EInterfaceIPInputFeature.MCICheck }
+ / 'Common Flow Table' Comma? WS? { EInterfaceIPInputFeature.CommonFlowTable }
+ / 'Stateful Inspection' Comma? WS? { EInterfaceIPInputFeature.StatefulInspection }
+
+OutputFeatures<List<EInterfaceIPOutputFeature>>
+ = 'Output features:' WS? of:OutputFeature* WS? { new List<EInterfaceIPOutputFeature>(of) }
+
+OutputFeature<EInterfaceIPOutputFeature>
+ = 'Input interface drop' Comma? WS? { EInterfaceIPOutputFeature.InputInterfaceDrop }
+ / 'Check hwidb' Comma? WS? { EInterfaceIPOutputFeature.CheckHWIDB }
+ / 'Post-routing NAT NVI Output' Comma? WS? { EInterfaceIPOutputFeature.PostRoutingNATNVIOutput }
+ / 'Common Flow Table' Comma? WS? { EInterfaceIPOutputFeature.CommonFlowTable }
+ / 'Stateful Inspection' Comma? WS? { EInterfaceIPOutputFeature.StatefulInspection }
+ / 'CCE Post NAT Classification' Comma? WS? { EInterfaceIPOutputFeature.CCEPostNATClassification }
+ / 'Firewall (firewall component)' Comma? WS? { EInterfaceIPOutputFeature.Firewall }
+
+WCCPRedirectOutbound<EEnabledState>
+ = ('IPv4' WS?)? 'WCCP Redirect outbound is' WS? es:EnabledState WS? { es }
+
+WCCPRedirectInbound<EEnabledState>
+ = ('IPv4' WS?)? 'WCCP Redirect inbound is' WS? es:EnabledState WS? { es }
+
+WCCPRedirectExclude<EEnabledState>
+ = ('IPv4' WS?)? 'WCCP Redirect exclude is' WS? es:EnabledState WS? { es }
+ 
+WS
+  = [ \t\r\n]+
+
+Number<int>
+  = i:[0-9]+ { Convert.ToInt32(string.Concat(i)) }
+ 
+Comma
+  = ','
+
+CiscoPrompt
+  = [A-Za-z0-9-_]*[#>]
+
+EOF 
+  = !.

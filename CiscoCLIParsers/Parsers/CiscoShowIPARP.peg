@@ -1,0 +1,91 @@
+﻿@namespace CiscoCLIParsers.Parsers
+@classname CiscoShowIPARP
+@using CiscoCLIParsers.Model
+
+ShowIPARP<List<ShowIPARPEntry>>
+ = CLICommand Heading a:ARPEntry* { new List<ShowIPARPEntry>(a) }
+ 
+CLICommand
+ = 'show ip arp' WS? 
+
+Heading
+ = 'Protocol' WS? 'Address' WS? 'Age (min)' WS? 'Hardware Addr' WS? 'Type' WS? 'Interface' WS?
+ 
+ARPEntry<ShowIPARPEntry>
+ = p:Protocol i:IPAddress a:Age m:MACAddress t:Type ii:InterfaceID WS? {
+   new ShowIPARPEntry {
+     Protocol = p,
+	 L3Address = i,
+	 Age = new TimeSpan(0,a,0),
+	 L2Address = m,
+	 L2AddressType = t,
+	 Interface = ii
+   }
+ }
+ 
+Protocol<EProtocolAddressFamily>
+ = 'Internet' WS? { EProtocolAddressFamily.IPv4 }
+ 
+IPAddress<System.Net.IPAddress>
+ = ip:(Octet '.' Octet '.' Octet '.' Octet) WS? { System.Net.IPAddress.Parse(ip) }
+ 
+Octet
+ = '25' [0-5]
+ / '2' [0-4][0-9]
+ / [0-1][0-9][0-9]
+ / [0-9][0-9]?
+ 
+Age<int>
+ = '-' WS? { -1 }
+ / n:Number WS? { n }
+
+MACAddress<System.Net.NetworkInformation.PhysicalAddress>
+  = i:(Hextet '.' Hextet '.' Hextet) WS? { 
+      System.Net.NetworkInformation.PhysicalAddress.Parse(i.Replace(".", "").ToUpper()) 
+    }
+  
+Hextet
+  = HexDigit HexDigit HexDigit HexDigit
+ 
+HexDigit
+  = [0-9A-Fa-f]
+
+Type<ELayer2Encapsulation>
+  = 'ARPA' WS? { ELayer2Encapsulation.ARPA }
+
+InterfaceID<CiscoInterfaceId>
+  	= a:InterfaceType b:InterfaceNumber c:ChannelNumber? d:SubinterfaceNumber? { Common.Helpers.ToCiscoInterfaceId(a, b, c, d) }
+
+InterfaceType<EInterfaceType>
+  = 'Vlan' { EInterfaceType.VLan }
+  / 'Ethernet' { EInterfaceType.Ethernet }
+  / 'FastEthernet' { EInterfaceType.FastEthernet }
+  / 'GigabitEthernet' { EInterfaceType.GigabitEthernet }
+  / 'TenGigabitEthernet' { EInterfaceType.TenGigabitEthernet }
+  / 'Port-channel' { EInterfaceType.PortChannel }
+  / 'Loopback' { EInterfaceType.Loopback }
+  / 'Tunnel' { EInterfaceType.Tunnel }
+  / 'Async' { EInterfaceType.Async }
+  / 'NVI' { EInterfaceType.NVI }
+  / 'ucse' { EInterfaceType.UCSE }
+  / 'Embedded-Service-Engine' { EInterfaceType.EmbeddedServicesEngine }
+  / 'BRI' { EInterfaceType.BasicRateInterface }
+  / 'Null' { EInterfaceType.Null }
+
+InterfaceNumber<CiscoInterfaceNumber>
+	= a:Number '/' b:Number '/' c:Number '/' d:Number { new CiscoInterfaceNumber { Chassis=a, LineCard=b, Module=c, Port=d } }
+	/ a:Number '/' b:Number '/' c:Number { new CiscoInterfaceNumber { LineCard=a, Module=b, Port=c } }
+	/ a:Number '/' b:Number { new CiscoInterfaceNumber { Module=a, Port=b } }
+	/ a:Number { new CiscoInterfaceNumber { Port=a } }
+  	
+SubinterfaceNumber<int>
+  = '.' i:Number { i }
+
+ChannelNumber<int>
+  = ':' i:Number { i }
+
+WS
+  = [ \t\r\n]+
+
+Number<int>
+  = i:[0-9]+ { Convert.ToInt32(string.Concat(i)) }

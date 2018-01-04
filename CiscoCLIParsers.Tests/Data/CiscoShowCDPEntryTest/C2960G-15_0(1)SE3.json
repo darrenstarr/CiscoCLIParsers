@@ -1,0 +1,206 @@
+﻿[
+  {
+    "DeviceID": "dcsw1.nocturnal.local",
+    "EntryAddresses": [
+      "10.100.1.1",
+      "2001:840:4b2b:101::1",
+      "fe80::2"
+    ],
+    "Platform": "Platform: cisco WS-C3750X-48",
+    "Capabilities": [
+      "Router",
+      "Switch",
+      "IGMP"
+    ],
+    "Interface": "GigabitEthernet0/24",
+    "PortId": "GigabitEthernet1/0/10",
+    "HoldTime": 140,
+    "VersionText": "Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M), Version 15.0(2)SE2, RELEASE SOFTWARE (fc1)\r\nTechnical Support: http://www.cisco.com/techsupport\r\nCopyright (c) 1986-2013 by Cisco Systems, Inc.\r\nCompiled Tue 05-Feb-13 11:45 by prod_rel_team\r\n",
+    "AdvertisementVersion": 2,
+    "AdvertisementExtras": [
+      {
+        "Name": "protocol hello",
+        "Value": "Protocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF0102250F000000000000588D09F3CA80FF0000\r\n"
+      },
+      {
+        "VTPManagementDomain": ""
+      },
+      {
+        "NativeVLAN": 1
+      },
+      {
+        "Duplex": "Full"
+      },
+      {
+        "ManagementIPAddresses": [
+          "10.100.1.1"
+        ]
+      }
+    ]
+  },
+  {
+    "DeviceID": "dcsw1.nocturnal.local",
+    "EntryAddresses": [
+      "10.100.1.1",
+      "2001:840:4b2b:101::1",
+      "fe80::2"
+    ],
+    "Platform": "Platform: cisco WS-C3750X-48",
+    "Capabilities": [
+      "Router",
+      "Switch",
+      "IGMP"
+    ],
+    "Interface": "GigabitEthernet0/23",
+    "PortId": "GigabitEthernet1/0/9",
+    "HoldTime": 140,
+    "VersionText": "Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M), Version 15.0(2)SE2, RELEASE SOFTWARE (fc1)\r\nTechnical Support: http://www.cisco.com/techsupport\r\nCopyright (c) 1986-2013 by Cisco Systems, Inc.\r\nCompiled Tue 05-Feb-13 11:45 by prod_rel_team\r\n",
+    "AdvertisementVersion": 2,
+    "AdvertisementExtras": [
+      {
+        "Name": "protocol hello",
+        "Value": "Protocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF0102250F000000000000588D09F3CA80FF0000\r\n"
+      },
+      {
+        "VTPManagementDomain": ""
+      },
+      {
+        "NativeVLAN": 1
+      },
+      {
+        "Duplex": "Full"
+      },
+      {
+        "ManagementIPAddresses": [
+          "10.100.1.1"
+        ]
+      }
+    ]
+  },
+  {
+    "DeviceID": "NocturnalWC",
+    "EntryAddresses": [
+      "10.100.1.16",
+      "fe80::3ece:73ff:fed9:8daf"
+    ],
+    "Platform": "Platform: AIR-CT2504-K9",
+    "Capabilities": [
+      "Host"
+    ],
+    "Interface": "GigabitEthernet0/21",
+    "PortId": "GigabitEthernet0/0/1",
+    "HoldTime": 163,
+    "VersionText": "Manufacturer's Name: Cisco Systems Inc.  Product Name: Cisco Controller  Product Version: 8.5.105.0  RTOS Version: Erro  Bootloader Version: 1.0.17  Build Type: DATA + WPS\r\n",
+    "AdvertisementVersion": 2,
+    "AdvertisementExtras": [
+      {
+        "Duplex": "Full"
+      },
+      {
+        "ManagementIPAddresses": []
+      }
+    ]
+  },
+  {
+    "DeviceID": "NocturnalWC",
+    "EntryAddresses": [
+      "10.100.1.16",
+      "fe80::3ece:73ff:fed9:8daf"
+    ],
+    "Platform": "Platform: AIR-CT2504-K9",
+    "Capabilities": [
+      "Host"
+    ],
+    "Interface": "GigabitEthernet0/22",
+    "PortId": "GigabitEthernet0/0/2",
+    "HoldTime": 163,
+    "VersionText": "Manufacturer's Name: Cisco Systems Inc.  Product Name: Cisco Controller  Product Version: 8.5.105.0  RTOS Version: Erro  Bootloader Version: 1.0.17  Build Type: DATA + WPS\r\n",
+    "AdvertisementVersion": 2,
+    "AdvertisementExtras": [
+      {
+        "Duplex": "Full"
+      },
+      {
+        "ManagementIPAddresses": []
+      }
+    ]
+  },
+  {
+    "DeviceID": "AP6c20.5613.fc62",
+    "EntryAddresses": [
+      "10.100.1.103",
+      "2001:840:4b2b:101:6e20:56ff:fe13:fc62",
+      "fe80::6e20:56ff:fe13:fc62"
+    ],
+    "Platform": "Platform: cisco AIR-CAP1602E-E-K9",
+    "Capabilities": [
+      "TransBridge",
+      "SourceRouteBridge",
+      "IGMP"
+    ],
+    "Interface": "GigabitEthernet0/11",
+    "PortId": "GigabitEthernet0",
+    "HoldTime": 143,
+    "VersionText": "Cisco IOS Software, C1600 Software (AP1G2-K9W8-M), Version 15.3(3)JF1, RELEASE SOFTWARE (fc3)\r\nTechnical Support: http://www.cisco.com/techsupport\r\nCopyright (c) 1986-2017 by Cisco Systems, Inc.\r\nCompiled Fri 20-Oct-17 21:09 by prod_rel_team\r\n",
+    "AdvertisementVersion": 2,
+    "AdvertisementExtras": [
+      {
+        "Duplex": "Full"
+      },
+      {
+        "Name": "power drawn",
+        "Value": "Power drawn: 15.400 Watts\r\n"
+      },
+      {
+        "Name": "power request and management",
+        "Value": "Power request id: 1263, Power management id: 1\r\n"
+      },
+      {
+        "Name": "power request levels",
+        "Value": "Power request levels are:15400 13000 0 0 0\r\n"
+      },
+      {
+        "ManagementIPAddresses": [
+          "10.100.1.103"
+        ]
+      }
+    ]
+  },
+  {
+    "DeviceID": "TORSW.minions.com",
+    "EntryAddresses": [
+      "10.100.5.2"
+    ],
+    "Platform": "Platform: cisco WS-C3560-24PS",
+    "Capabilities": [
+      "Router",
+      "Switch",
+      "IGMP"
+    ],
+    "Interface": "GigabitEthernet0/12",
+    "PortId": "FastEthernet0/24",
+    "HoldTime": 157,
+    "VersionText": "Cisco IOS Software, C3560 Software (C3560-IPSERVICESK9-M), Version 12.2(55)SE11, RELEASE SOFTWARE (fc3)\r\nTechnical Support: http://www.cisco.com/techsupport\r\nCopyright (c) 1986-2016 by Cisco Systems, Inc.\r\nCompiled Wed 17-Aug-16 13:07 by prod_rel_team\r\n",
+    "AdvertisementVersion": 2,
+    "AdvertisementExtras": [
+      {
+        "Name": "protocol hello",
+        "Value": "Protocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF010221FF0000000000000015F96DC200FF0000\r\n"
+      },
+      {
+        "VTPManagementDomain": ""
+      },
+      {
+        "NativeVLAN": 1
+      },
+      {
+        "Duplex": "Full"
+      },
+      {
+        "ManagementIPAddresses": [
+          "10.100.5.2"
+        ]
+      }
+    ]
+  }
+]

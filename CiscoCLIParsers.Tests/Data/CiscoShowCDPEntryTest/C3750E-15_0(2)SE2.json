@@ -1,0 +1,169 @@
+[
+  {
+    "DeviceID": "ucse",
+    "EntryAddresses": [],
+    "Platform": "Platform: VMware ESX",
+    "Capabilities": [ "Switch" ],
+    "Interface": "GigabitEthernet1/0/1",
+    "PortId": "vmnic3",
+    "HoldTime": 123,
+    "VersionText": "Releasebuild-3073146\r\n",
+    "AdvertisementVersion": 2,
+    "AdvertisementExtras": [
+      { "VTPManagementDomain": "" },
+      { "Duplex": "Full" },
+      {
+        "Name": "power available",
+        "Value": "Power Available TLV:\r\n\r\n    Power request id: 0, Power management id: 0, Power available: 0, Power management level: 0\r\n"
+      },
+      { "ManagementIPAddresses": [] }
+    ]
+  },
+  {
+    "DeviceID": "ucse",
+    "EntryAddresses": [],
+    "Platform": "Platform: VMware ESX",
+    "Capabilities": [ "Switch" ],
+    "Interface": "GigabitEthernet1/0/2",
+    "PortId": "vmnic2",
+    "HoldTime": 123,
+    "VersionText": "Releasebuild-3073146\r\n",
+    "AdvertisementVersion": 2,
+    "AdvertisementExtras": [
+      { "VTPManagementDomain": "" },
+      { "Duplex": "Full" },
+      {
+        "Name": "power available",
+        "Value": "Power Available TLV:\r\n\r\n    Power request id: 0, Power management id: 0, Power available: 0, Power management level: 0\r\n"
+      },
+      { "ManagementIPAddresses": [] }
+    ]
+  },
+  {
+    "DeviceID": "RUCS.nocturnal.local",
+    "EntryAddresses": [ "10.100.0.1", "2001:840:4b2b:100::1", "fe80::1" ],
+    "Platform": "Platform: Cisco CISCO2921/K9",
+    "Capabilities": [ "Router", "SourceRouteBridge", "Switch" ],
+    "Interface": "GigabitEthernet1/0/48",
+    "PortId": "GigabitEthernet0/2",
+    "HoldTime": 139,
+    "VersionText": "Cisco IOS Software, C2900 Software (C2900-UNIVERSALK9-M), Version 15.6(1)T0a, RELEASE SOFTWARE (fc1)\r\nTechnical Support: http://www.cisco.com/techsupport\r\nCopyright (c) 1986-2015 by Cisco Systems, Inc.\r\nCompiled Thu 03-Dec-15 15:16 by prod_rel_team\r\n",
+    "AdvertisementVersion": 2,
+    "AdvertisementExtras": [
+      { "Duplex": "Full" },
+      {
+        "Name": "power available",
+        "Value": "Power Available TLV:\r\n\r\n    Power request id: 0, Power management id: 0, Power available: 0, Power management level: 0\r\n"
+      },
+      { "ManagementIPAddresses": [ "10.100.0.1" ] }
+    ]
+  },
+  {
+    "DeviceID": "N5K-2(FLC12160010)",
+    "EntryAddresses": [ "10.100.11.3" ],
+    "Platform": "Platform: N5K-C5020P-BF",
+    "Capabilities": [ "Switch", "IGMP", "CVTA", "Phone", "Port" ],
+    "Interface": "GigabitEthernet1/0/4",
+    "PortId": "mgmt0",
+    "HoldTime": 142,
+    "VersionText": "Cisco Nexus Operating System (NX-OS) Software, Version 5.2(1)N1(7)\r\n",
+    "AdvertisementVersion": 2,
+    "AdvertisementExtras": [
+      { "Duplex": "Full" },
+      {
+        "Name": "power available",
+        "Value": "Power Available TLV:\r\n\r\n    Power request id: 0, Power management id: 0, Power available: 0, Power management level: 0\r\n"
+      },
+      { "ManagementIPAddresses": [ "10.100.11.3" ] }
+    ]
+  },
+  {
+    "DeviceID": "N5K-1(FLC12320157)",
+    "EntryAddresses": [ "10.100.1.230" ],
+    "Platform": "Platform: N5K-C5020P-BF",
+    "Capabilities": [ "Switch", "IGMP", "CVTA", "Phone", "Port" ],
+    "Interface": "TenGigabitEthernet1/1/1",
+    "PortId": "Ethernet1/40",
+    "HoldTime": 142,
+    "VersionText": "Cisco Nexus Operating System (NX-OS) Software, Version 5.2(1)N1(7)\r\n",
+    "AdvertisementVersion": 2,
+    "AdvertisementExtras": [
+      { "NativeVLAN": 1 },
+      { "Duplex": "Full" },
+      {
+        "Name": "power available",
+        "Value": "Power Available TLV:\r\n\r\n    Power request id: 0, Power management id: 0, Power available: 0, Power management level: 0\r\n"
+      },
+      { "ManagementIPAddresses": [ "10.100.11.2" ] }
+    ]
+  },
+  {
+    "DeviceID": "N5K-1(FLC12320157)",
+    "EntryAddresses": [ "10.100.11.2" ],
+    "Platform": "Platform: N5K-C5020P-BF",
+    "Capabilities": [ "Switch", "IGMP", "CVTA", "Phone", "Port" ],
+    "Interface": "GigabitEthernet1/0/3",
+    "PortId": "mgmt0",
+    "HoldTime": 142,
+    "VersionText": "Cisco Nexus Operating System (NX-OS) Software, Version 5.2(1)N1(7)\r\n",
+    "AdvertisementVersion": 2,
+    "AdvertisementExtras": [
+      { "Duplex": "Full" },
+      {
+        "Name": "power available",
+        "Value": "Power Available TLV:\r\n\r\n    Power request id: 0, Power management id: 0, Power available: 0, Power management level: 0\r\n"
+      },
+      { "ManagementIPAddresses": [ "10.100.11.2" ] }
+    ]
+  },
+  {
+    "DeviceID": "Acc1.nocturnal.local",
+    "EntryAddresses": [ "10.100.1.18" ],
+    "Platform": "Platform: cisco WS-C2960G-24TC-L",
+    "Capabilities": [ "Switch", "IGMP" ],
+    "Interface": "GigabitEthernet1/0/10",
+    "PortId": "GigabitEthernet0/24",
+    "HoldTime": 174,
+    "VersionText": "Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 15.0(1)SE3, RELEASE SOFTWARE (fc1)\r\nTechnical Support: http://www.cisco.com/techsupport\r\nCopyright (c) 1986-2012 by Cisco Systems, Inc.\r\nCompiled Wed 30-May-12 14:26 by prod_rel_team\r\n",
+    "AdvertisementVersion": 2,
+    "AdvertisementExtras": [
+      {
+        "Name": "protocol hello",
+        "Value": "Protocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF01022501000000000000001EF6C17800FF0000\r\n"
+      },
+      { "VTPManagementDomain": "" },
+      { "NativeVLAN": 1 },
+      { "Duplex": "Full" },
+      {
+        "Name": "power available",
+        "Value": "Power Available TLV:\r\n\r\n    Power request id: 0, Power management id: 1, Power available: 0, Power management level: -1\r\n"
+      },
+      { "ManagementIPAddresses": [ "10.100.1.18" ] }
+    ]
+  },
+  {
+    "DeviceID": "Acc1.nocturnal.local",
+    "EntryAddresses": [ "10.100.1.18" ],
+    "Platform": "Platform: cisco WS-C2960G-24TC-L",
+    "Capabilities": [ "Switch", "IGMP" ],
+    "Interface": "GigabitEthernet1/0/9",
+    "PortId": "GigabitEthernet0/23",
+    "HoldTime": 171,
+    "VersionText": "Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 15.0(1)SE3, RELEASE SOFTWARE (fc1)\r\nTechnical Support: http://www.cisco.com/techsupport\r\nCopyright (c) 1986-2012 by Cisco Systems, Inc.\r\nCompiled Wed 30-May-12 14:26 by prod_rel_team\r\n",
+    "AdvertisementVersion": 2,
+    "AdvertisementExtras": [
+      {
+        "Name": "protocol hello",
+        "Value": "Protocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF01022501000000000000001EF6C17800FF0000\r\n"
+      },
+      { "VTPManagementDomain": "" },
+      { "NativeVLAN": 1 },
+      { "Duplex": "Full" },
+      {
+        "Name": "power available",
+        "Value": "Power Available TLV:\r\n\r\n    Power request id: 0, Power management id: 1, Power available: 0, Power management level: -1\r\n"
+      },
+      { "ManagementIPAddresses": [ "10.100.1.18" ] }
+    ]
+  }
+]

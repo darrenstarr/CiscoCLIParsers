@@ -1,0 +1,674 @@
+﻿@namespace CiscoCLIParsers.Parsers
+@classname CiscoShowInterfaces
+@using CiscoCLIParsers.Model
+
+ShowInterfaces<List<ShowInterfacesItem>>
+ = CLICommand i:Interface*  { new List<ShowInterfacesItem>(i) }
+ 
+CLICommand
+ = 'show interfaces' WS? 
+ 
+Interface<ShowInterfacesItem>
+ = intId:InterfaceID 
+   WS? 'is' WS?
+   ls:LineStatus
+   ps:ProtocolStatus?
+   hw:HardwareIs?
+   des:Description?
+   addr:InternetAddressIs?
+   met:Metrics?
+   enc:Encapsulation?
+   lo:LoopbackSetting?
+   ka:Keepalive?
+   ecp:EthernetCommunicationProperties?
+   pcp:PPPCommunicationProperties?
+   ifc:InputFlowControl?
+   ofc:OutputFlowControl?
+   pcm:PortChannelMembers?
+   ast:ARPStatistics?
+   ti:Timers?
+   qu:Queues?
+   intStat:InterfaceStatistics? 
+   {
+     new ShowInterfacesItem {
+		InterfaceId = intId,
+		LineStatus = ls,
+		ProtocolStatus = ps.Count > 0 ? ps[0] : EInterfaceStatus.Unknown,
+		Hardware = hw.Count > 0 ? hw[0] : null,
+		Description = des.Count > 0 ? des[0] : "",
+		IPv4Address = addr.Count > 0 ? addr[0] : null,
+		Metrics = met.Count > 0 ? met[0] : null,
+		Layer2Encapsulation = enc.Count > 0 ? enc[0] : ELayer2Encapsulation.Unknown,
+		LoopbackSetting = lo.Count > 0 ? lo[0] : ELoopbackSetting.Unknown,
+		Keepalive = ka.Count > 0 ? ka[0] : new InterfaceKeepaliveSettings { State = EInterfaceKeepalive.Unknown },
+		ProtocolProperties = ecp.Count > 0 ? (Layer2ProtocolProperties) ecp[0] : (pcp.Count > 0 ? (Layer2ProtocolProperties) pcp[0] : null),
+		InputFlowControl = ifc.Count > 0 ? ifc[0] : EFlowControlType.Unknown,
+		OutputFlowControl = ifc.Count > 0 ? ofc[0] : EFlowControlType.Unknown,
+		PortChannelMembers = pcm.Count > 0 ? pcm[0] : null,
+		ARPStats = ast.Count > 0 ? ast[0] : null,
+		Statistics = intStat.Count > 0 ? intStat[0] : null
+	 }
+   }
+ 
+InterfaceID<CiscoInterfaceId>
+  	= a:InterfaceType b:InterfaceNumber c:ChannelNumber? d:SubinterfaceNumber? { Common.Helpers.ToCiscoInterfaceId(a, b, c, d) }
+
+InterfaceType<EInterfaceType>
+  = 'Vlan' { EInterfaceType.VLan }
+  / 'Ethernet' { EInterfaceType.Ethernet }
+  / 'FastEthernet' { EInterfaceType.FastEthernet }
+  / 'GigabitEthernet' { EInterfaceType.GigabitEthernet }
+  / 'TenGigabitEthernet' { EInterfaceType.TenGigabitEthernet }
+  / 'Port-channel' { EInterfaceType.PortChannel }
+  / 'Loopback' { EInterfaceType.Loopback }
+  / 'Tunnel' { EInterfaceType.Tunnel }
+  / 'Async' { EInterfaceType.Async }
+  / 'NVI' { EInterfaceType.NVI }
+  / 'ucse' { EInterfaceType.UCSE }
+  / 'Embedded-Service-Engine' { EInterfaceType.EmbeddedServicesEngine }
+  / 'BRI' { EInterfaceType.BasicRateInterface }
+  / 'Null' { EInterfaceType.Null }
+
+InterfaceNumber<CiscoInterfaceNumber>
+	= a:Number '/' b:Number '/' c:Number '/' d:Number { new CiscoInterfaceNumber { Chassis=a, LineCard=b, Module=c, Port=d } }
+	/ a:Number '/' b:Number '/' c:Number { new CiscoInterfaceNumber { LineCard=a, Module=b, Port=c } }
+	/ a:Number '/' b:Number { new CiscoInterfaceNumber { Module=a, Port=b } }
+	/ a:Number { new CiscoInterfaceNumber { Port=a } }
+  	
+SubinterfaceNumber<int>
+  = '.' i:Number { i }
+
+ChannelNumber<int>
+  = ':' i:Number { i }
+ 
+LineStatus<EInterfaceStatus>
+  = i:InterfaceState Comma WS? { i }
+  
+ProtocolStatus<EInterfaceStatus>
+  = 'line protocol is' WS? ps:InterfaceState WS? { ps }
+  
+InterfaceState<EInterfaceStatus>
+  	= 'up' (WS? '(connected)')? { EInterfaceStatus.Up }
+  	/ 'down' (WS? '(notconnect)')? { EInterfaceStatus.Down }
+  	/ 'administratively down' { EInterfaceStatus.AdministrativelyDown }
+
+HardwareIs<InterfaceHardware>
+  = 'Hardware is' WS? ht:HardwareType WS? { ht }
+  
+HardwareType<InterfaceHardware>
+  = 'Loopback' { new LoopbackInterfaceHardware() }
+  / 'BRI with S/T interface and POTS' { new BasicRateInterfaceHardware() }
+  / EthernetHardware
+  
+EthernetHardware<EthernetInterfaceHardware>
+  = ct:EthernetChipType? 
+    ht:EthernetHardwareType 
+	Comma WS? 'address is' WS? 
+	mac:MACAddress 
+	WS? 
+	bia:BurnedInEthernetMac? {
+	  new EthernetInterfaceHardware {
+	    MACAddress = mac,
+		HardwareType = ht,
+		BurnedInAddress = bia.Count > 0 ? bia[0] : null,
+		ChipType = ct.Count > 0 ? ct[0] : EEthernetChipType.Unspecified
+	  }
+	}
+ 
+EthernetChipType<EEthernetChipType>
+  = 'PowerPC405' WS? { EEthernetChipType.PowerPC405 }
+  / 'PQUICC' WS? { EEthernetChipType.PQUICC }
+ 
+EthernetHardwareType<EInterfaceType>
+  = 'EtherSVI' { EInterfaceType.VLan }
+  / 'Ethernet' { EInterfaceType.Ethernet }
+  / 'Fast' WS? 'Ethernet' { EInterfaceType.FastEthernet }
+  / 'Gigabit Ethernet' { EInterfaceType.GigabitEthernet }
+  / 'Ten Gigabit Ethernet' { EInterfaceType.TenGigabitEthernet }
+  / 'EtherChannel' { EInterfaceType.PortChannel }
+
+BurnedInEthernetMac<System.Net.NetworkInformation.PhysicalAddress>
+ = '(bia' WS+ mac:MACAddress ')' { mac }
+
+Description
+  = 'Description:' WS? desc:[^\n\r]* WS? { string.Concat(desc) }
+ 
+InternetAddressIs<NetworkPrefix>
+  = 'Internet address is' WS? pref:Prefix { pref }
+  
+Prefix<NetworkPrefix>
+ = na:IPAddress '/' len:Number WS? { new NetworkPrefix { NetworkAddress = na, Length = len } }
+
+Metrics<InterfaceMetrics>
+  = m:MTU
+    bw:Bandwidth
+    d:Delay
+    r:Reliability
+    tl:TransmitLoad
+    rl:ReceiveLoad
+	{
+		new InterfaceMetrics {
+			MTU = m,
+			Bandwidth = bw,
+			Delay = d,
+			Reliability = r,
+			TransmitLoad = tl,
+			ReceiveLoad = rl
+			}
+	}
+    
+MTU<int>
+  = 'MTU' WS? i:Number WS? 'bytes' Comma WS? { i }
+
+Bandwidth<Int64>
+  = 'BW' WS? x:BigNumber WS? u:DataRate Comma WS? { ExpandBandwidth(x, u) }
+  
+// TODO: Is timeunit ever anything but usec
+Delay<int>
+  = 'DLY' WS? i:Number WS? TimeUnit Comma WS? { i }
+   
+TimeUnit
+  = 'usec' 
+ 
+Reliability<Ratio>
+  = 'reliability' WS? n:Number WS? '/' WS? d:Number Comma WS? { new Ratio { Numerator=n, Denominator=d } }
+   
+TransmitLoad<Ratio>
+  = 'txload' WS? n:Number WS? '/' WS? d:Number WS? Comma WS? { new Ratio { Numerator=n, Denominator=d } }
+ 
+ReceiveLoad<Ratio>
+  = 'rxload' WS? n:Number WS? '/' WS? d:Number WS? { new Ratio { Numerator=n, Denominator=d } }
+
+Encapsulation<ELayer2Encapsulation>
+  = 'Encapsulation' WS? enc:EncapsulationType Comma WS? { enc } 
+
+EncapsulationType<ELayer2Encapsulation>
+  = 'ARPA' { ELayer2Encapsulation.ARPA }
+  / 'LOOPBACK' { ELayer2Encapsulation.Loopback }
+  / 'PPP' { ELayer2Encapsulation.PPP }
+  
+LoopbackSetting<ELoopbackSetting>
+  = 'loopback' WS? lo:LoopbackIs WS? { lo }
+  
+LoopbackIs<ELoopbackSetting>
+  = 'not set' { ELoopbackSetting.NotSet }
+
+Keepalive<InterfaceKeepaliveSettings>
+  = 'Keepalive' WS? ka:KeepaliveIs WS? { ka }
+  
+KeepaliveIs<InterfaceKeepaliveSettings>
+  = 'not supported' { new InterfaceKeepaliveSettings { State = EInterfaceKeepalive.NotSupported } }
+  / 'not set' { new InterfaceKeepaliveSettings { State = EInterfaceKeepalive.NotSet } }
+  / 'set' WS? '(' s:Number WS? 'sec)' { new InterfaceKeepaliveSettings { State = EInterfaceKeepalive.Set, Interval=s } }
+  
+EthernetCommunicationProperties<EthernetProtocolProperties>
+  = dup:EthernetDuplex Comma WS? 
+    sp:EthernetSpeed Comma WS? 
+	lt:EthernetLinkType? WS? 
+	mt:EthernetMediaType WS? {
+	  new EthernetProtocolProperties
+	  {
+	    Duplex = dup,
+		Speed = sp,
+		LinkType = lt.Count > 0 ? lt[0] : EEthernetLinkType.Unknown,
+		MediaType = mt
+	  }
+	}
+  
+EthernetDuplex<EDuplex>
+  = 'Half-duplex' { EDuplex.Half }
+  / 'Full-duplex' { EDuplex.Full }
+  / 'Auto-duplex' { EDuplex.Auto }
+  / 'Unknown duplex' { EDuplex.Unknown }
+  
+EthernetSpeed<EthernetSpeed>
+  = 'Unknown Speed' { new EthernetSpeed { Rate = EEthernetRateSetting.Unknown } }
+  / 'Auto-speed' { new EthernetSpeed { Rate = EEthernetRateSetting.Auto } }
+  / n:Number r:DataRate { new EthernetSpeed { Rate = EEthernetRateSetting.Unknown, Speed = ExpandBandwidth(n, r) } }
+  
+EthernetLinkType<EEthernetLinkType>
+  = 'link type is' WS? lt:LinkTypes Comma? WS? { lt }
+  
+LinkTypes<EEthernetLinkType>
+  = 'auto' { EEthernetLinkType.Auto }
+  
+EthernetMediaType<EEthernetMediaType>
+  = 'MII' { EEthernetMediaType.MII }
+  / 'media type is' WS? emt:EthernetPhysicalMediaType { emt }
+
+EthernetPhysicalMediaType<EEthernetMediaType>
+  = '10/100/1000BaseTX' { EEthernetMediaType.TenHundredGig }
+  / 'Not Present' { EEthernetMediaType.NotPresent }
+  / 'SFP-10GBase-CX1' { EEthernetMediaType.SFP10GBaseCX1 }
+  / 'unknown' { EEthernetMediaType.Unknown }
+   
+PPPCommunicationProperties<PPPProtocolProperties>
+  = lcp:LCP mls:Multilink? {
+    new PPPProtocolProperties {
+		LCPState = lcp,
+		MultilinkState = mls.Count > 0 ? mls[0] : EMultilinkState.Unknown
+	}
+  }
+  
+LCP<ELinkControlProtocolState>
+  = 'LCP' WS? ls:LCPState Comma? WS? { ls }
+  
+LCPState<ELinkControlProtocolState>
+  = 'Closed' { ELinkControlProtocolState.Closed }
+  
+Multilink<EMultilinkState>
+  = 'multilink' WS? ms:MultilinkState Comma? WS? { ms }
+  
+MultilinkState<EMultilinkState>
+  = 'Closed' { EMultilinkState.Closed }
+  
+InputFlowControl <EFlowControlType>
+  = 'input flow-control is' WS? f:FlowControlType Comma? WS? { f } 
+ 
+OutputFlowControl <EFlowControlType>
+  = 'output flow-control is' WS? f:FlowControlType Comma? WS? { f }
+ 
+FlowControlType <EFlowControlType>
+  = 'off' { EFlowControlType.Off }
+  / 'unsupported' { EFlowControlType.Unsupported }
+  
+PortChannelMembers<List<CiscoInterfaceId>>
+  = 'Members in this channel:' WS? i:InterfaceAbbreviations WS? { i }
+  
+InterfaceAbbreviations<List<CiscoInterfaceId>>
+  = i:InterfaceAbbreviation* { new List<CiscoInterfaceId>(i) }
+               
+InterfaceAbbreviation<CiscoInterfaceId>
+ = a:InterfacePrefix b:InterfaceNumber Comma? WS {
+   new CiscoInterfaceId {
+     InterfaceType = a,
+	 InterfaceNumber = b
+   }
+ } 
+ 
+InterfacePrefix<EInterfaceType>
+ = 'Et' [h]? { EInterfaceType.Ethernet }
+ / 'Fa' { EInterfaceType.FastEthernet }
+ / 'Gi' { EInterfaceType.GigabitEthernet }
+ / 'Te' { EInterfaceType.TenGigabitEthernet }
+ 
+ARPStatistics <ARPStatistics>
+ = 'ARP type:' WS? at:ARPType Comma WS?
+   'ARP Timeout' WS? to:CiscoTimeSpan WS? {
+     new ARPStatistics {
+	   ARPType = at,
+	   TimeOut = to
+	 }
+   }
+
+ARPType <EARPType>
+  = 'ARPA' { EARPType.ARPA }
+ 
+Timers<InterfaceTimers>
+ = lit:LastInputTime
+   lot:LastOutputTime
+   oht:OutputHangTime
+   lcc:LastCounterClearing {
+     new InterfaceTimers {
+		LastInputTime = lit,
+		LastOutputTime = lot,
+		OutputHangTime = oht,
+		LastCounterClearing = lcc
+	 }
+   }
+   
+LastInputTime<TimeSpan>
+ = 'Last input' WS? i:CiscoTimeSpan Comma? WS? { i }
+
+LastOutputTime<TimeSpan>
+ = 'output' WS? i:CiscoTimeSpan Comma? WS? { i }
+   
+OutputHangTime<TimeSpan>
+ = 'output hang' WS? i:CiscoTimeSpan WS? { i }
+ 
+LastCounterClearing<TimeSpan>
+  = 'Last clearing of "show interface" counters' WS? i:CiscoTimeSpan WS? { i }
+ 
+Queues<InterfaceQueueCharacteristics>
+  = inp:InputQueueCharacterisitics 
+    oup:OutputQueueCharacterisitics {
+	  new InterfaceQueueCharacteristics {
+	    Input = inp,
+		Output = oup
+	  }
+	}
+  
+InputQueueCharacterisitics<InterfaceInputQueueCharacteristics>
+  = inq:InputQueue 
+    ouq:OutputDrops 
+	qs:QueueingStrategy {
+	new InterfaceInputQueueCharacteristics {
+		InputQueue = inq,
+		OutputDrops = ouq,
+		Strategy = qs
+	}
+  }
+  
+InputQueue<InterfaceQueueCounters>
+  = 'Input queue:' WS? a:Number '/' b:Number '/' c:Number '/' d:Number WS? '(size/max/drops/flushes);' WS? {
+    new InterfaceQueueCounters {
+	  Size = a,
+	  Max = b,
+	  Drops = c,
+	  Flushed = d,
+	  Threshold = -1
+	}
+  }
+    
+OutputDrops<Int64>
+  = 'Total output drops:' WS? n:BigNumber WS? { n }
+  
+QueueingStrategy <EQueueingStrategyType>
+  = 'Queueing strategy:' WS? q:QueueingStrategyType WS? { q }
+   
+QueueingStrategyType <EQueueingStrategyType>
+  = 'fifo' { EQueueingStrategyType.FIFO }
+  / 'weighted fair' { EQueueingStrategyType.WeightedFairQueueing }
+  
+OutputQueueCharacterisitics <InterfaceOutputQueueCharacteristics>
+   = oq:OutputQueue
+     con:Conversations?
+     rco:ReservedConversations?
+     ab:AvailableBandwidth? {
+		new InterfaceOutputQueueCharacteristics {
+  		  OutputQueue = oq,
+		  Conversations = con.Count > 0 ? con[0] : null,
+		  ReservedConversations = rco.Count > 0 ? rco[0] : null,
+		  AvailableBandwidth = ab.Count > 0 ? ab[0] : -1
+		}		
+	 }
+     
+OutputQueue<InterfaceQueueCounters>
+  = 'Output queue:' WS? s:BigNumber '/' m:BigNumber WS? '(size/max)' WS? { new InterfaceQueueCounters { Size=s, Max=m, Threshold=-1, Drops=-1, Flushed=-1 } }
+  / 'Output queue:' WS? s:BigNumber '/' m:BigNumber '/' t:BigNumber '/' d:BigNumber WS? '(size/max total/threshold/drops)' WS?  { new InterfaceQueueCounters { Size=s, Max=m, Threshold=t, Drops=d, Flushed=-1 } }
+
+Conversations<InterfaceOutputQueueConversations>
+  = 'Conversations' WS? a:BigNumber '/' ma:BigNumber '/' mt:BigNumber WS? '(active/max active/max total)' WS? {
+    new InterfaceOutputQueueConversations {
+	  Active = a,
+	  MaxActive = ma,
+	  MaxTotal = mt
+	}
+  }
+
+ReservedConversations<InterfaceOutputQueueReservedConversations>
+  = 'Reserved Conversations' WS? al:Number '/' ma:Number WS? '(allocated/max allocated)' WS? {
+	new InterfaceOutputQueueReservedConversations {
+		Allocated = al,
+		MaxAllocated = ma
+	}
+  }
+
+AvailableBandwidth<Int64>
+  = 'Available Bandwidth' WS? n:Number WS? r:DataRate WS? {
+	n*r
+  }
+
+InterfaceStatistics<InterfaceStatistics>
+  =  ir:InputRate
+     or:OutputRate 
+     ins:InputStatistics 
+	 ous:OutputStatistics {
+	   new InterfaceStatistics {
+	     InputRate = ir,
+		 OutputRate = or,
+	     InputStatistics = ins,
+		 OutputStatistics = ous
+	   }
+	 }
+
+InputRate<InterfaceDataRate>
+  = '5 minute input rate' WS? i:BigNumber WS? d:DataRate Comma WS? p:Number WS? PacketRate WS? {
+    new InterfaceDataRate {
+	  BitsPerSecond = i*d,
+	  PacketsPerSecond = p
+	}
+  }
+
+OutputRate<InterfaceDataRate>
+  = '5 minute output rate' WS? i:BigNumber WS? d:DataRate Comma WS? p:Number WS? PacketRate WS? {
+    new InterfaceDataRate {
+	  BitsPerSecond = i * d,
+	  PacketsPerSecond = p
+	}
+  }
+  
+DataRate<Int64>
+  = [Bb] 'it'? 's'? ('/s' 'ec'?)? { 1 }
+  / [Kk] 'ilo'? [Bb] 'it'? 's'? ('/s' 'ec'?)? { 1000 }
+  / [Mm] 'ega'? [Bb] 'it'? 's'? ('/s' 'ec'?)? { 1000000 }
+  / [Gg] 'iga'? [Bb] 'it'? 's'? ('/s' 'ec'?)? { 1000000000 }
+
+PacketRate
+  = 'packets/sec'
+    
+InputStatistics<InterfaceInputStatistics>
+  = pin:PacketsInput?
+    pinb:PacketsInputNoBuffer?
+    bri:BroadcastsInput?
+	mui:MulticastsInput?
+    run:Runts?
+    gia:Giants?
+    thr:Throttles?
+    ine:InputErrors?
+    inc:InputCRC?
+    inf:InputFrame?
+    ino:InputOverrun?
+    ini:InputIgnored?
+    ina:InputAbort?
+    wad:WatchDog?
+    iam:InputMulticast?
+    pai:PauseInput?
+    idc:InputDribbleCondition? {
+      new InterfaceInputStatistics {
+        PacketsInput = pin.Count > 0 ? pin[0] : -1,
+        PacketsInputNoBuffer = pinb.Count > 0 ? pinb[0] : -1,
+        BroadcastsInput = bri.Count > 0 ? bri[0] : -1,
+        MulticastsInput = mui.Count > 0 ? mui[0] : -1,
+        Runts = run.Count > 0 ? run[0] : -1,
+        Giants = gia.Count > 0 ? gia[0] : -1,
+        Throttles = thr.Count > 0 ? thr[0] : -1,
+        InputErrors = ine.Count > 0 ? ine[0] : -1,
+        InputCRC = inc.Count > 0 ? inc[0] : -1,
+        InputFrame = inf.Count > 0 ? inf[0] : -1,
+        InputOverrun = ino.Count > 0 ? ino[0] : -1,
+        InputIgnored = ini.Count > 0 ? ini[0] : -1,
+        InputAbort = ina.Count > 0 ? ina[0] : -1,
+        WatchDog = wad.Count > 0 ? wad[0] : -1,
+        InputMulticast = iam.Count > 0 ? iam[0] : -1,
+        PauseInput = pai.Count > 0 ? pai[0] : -1,
+        InputDribbleCondition = idc.Count > 0 ? idc[0] : -1
+	  }
+	}
+
+PacketsInput<Int64>
+  = Number WS? 'packets input' Comma WS? i:BigNumber WS? 'bytes' Comma? WS? { i }
+
+PacketsInputNoBuffer<Int64>
+  = i:BigNumber WS? 'no buffer' WS? { i }
+
+BroadcastsInput<Int64>
+  = 'Received' WS? i:BigNumber WS? 'broadcasts' Comma? WS?  { i }
+  
+MulticastsInput<Int64>
+  = '(' i:BigNumber WS? ('IP' WS)? 'multicasts)' WS? Comma? WS? { i }
+
+Runts<Int64>
+  = i:BigNumber WS? 'runts' Comma? WS? { i }
+
+Giants<Int64>
+  = i:BigNumber WS? 'giants' Comma? WS? { i }
+
+Throttles<Int64>
+  = i:BigNumber WS? 'throttles' Comma? WS? { i }
+
+InputErrors<Int64>
+  = i:BigNumber WS? 'input errors' Comma? WS? { i }
+
+InputCRC<Int64>
+  = i:BigNumber WS? 'CRC' Comma? WS? { i }
+
+InputFrame<Int64>
+  = i:BigNumber WS? 'frame' Comma? WS? { i }
+
+InputOverrun<Int64>
+  = i:BigNumber WS? 'overrun' Comma? WS? { i }
+
+InputIgnored<Int64>
+  = i:BigNumber WS? 'ignored' Comma? WS? { i }
+
+InputAbort<Int64>
+  = i:BigNumber WS? 'abort' Comma? WS? { i }
+
+WatchDog<Int64>
+  = i:BigNumber WS? 'watchdog' Comma? WS? { i }
+
+InputMulticast<Int64>
+  = i:BigNumber WS? 'multicast' Comma? WS? { i }
+
+PauseInput<Int64>
+  = i:BigNumber WS? 'pause input' Comma? WS? { i }
+
+InputDribbleCondition<Int64>
+  = i:BigNumber WS? 'input packets with dribble condition detected' WS? { i }
+
+OutputStatistics<InterfaceOutputStatistics>
+  = po:PacketsOutput?
+	pob:PacketsOutputBytes?
+    und:Underruns?
+    oe:OutputErrors?
+    col:Collisions?
+    ir:InterfaceResets?
+    upd:UnknownProtocolDrops?
+    bab:Babbles?
+    lc:LateCollisions?
+    def:Deferred?
+    loc:LostCarrier?
+    noc:NoCarrier?
+    pao:PauseOutput?
+    obf:OutputBufferFailures?
+    obs:OutputBuffersSwappedOut?
+    ctr:CarrierTransitions? {
+	  new InterfaceOutputStatistics {
+  	  PacketsOutput = po.Count > 0 ? po[0] : -1,
+        PacketsOutputBytes = pob.Count > 0 ? pob[0] : -1,
+        Underruns = und.Count > 0 ? und[0] : -1,
+        OutputErrors = oe.Count > 0 ? oe[0] : -1,
+        Collisions = col.Count > 0 ? col[0] : -1,
+        InterfaceResets = ir.Count > 0 ? ir[0] : -1,
+        UnknownProtocolDrops = upd.Count > 0 ? upd[0] : -1,
+        Babbles = bab.Count > 0 ? bab[0] : -1,
+        LateCollisions = lc.Count > 0 ? lc[0] : -1,
+        Deferred = def.Count > 0 ? def[0] : -1,
+        LostCarrier = loc.Count > 0 ? loc[0] : -1,
+        NoCarrier = noc.Count > 0 ? noc[0] : -1,
+        PauseOutput = pao.Count > 0 ? pao[0] : -1,
+        OutputBufferFailures = obf.Count > 0 ? obf[0] : -1,
+        OutputBuffersSwappedOut = obs.Count > 0 ? obs[0] : -1,
+        CarrierTransitions = ctr.Count > 0 ? ctr[0] : -1
+	  }
+	}
+
+PacketsOutput<Int64>
+  = i:BigNumber WS? 'packets output' Comma? WS? {i} 
+  
+ PacketsOutputBytes<Int64>
+  = i:BigNumber WS? 'bytes' Comma? WS? { i }
+   
+Underruns<Int64>
+  = i:BigNumber WS? 'underruns' Comma? WS? { i }
+
+OutputErrors<Int64>
+  = i:BigNumber WS? 'output errors' Comma? WS? { i }
+  
+Collisions<Int64>
+  = i:BigNumber WS? 'collisions' Comma? WS? { i }
+
+InterfaceResets<Int64>
+  = i:BigNumber WS? 'interface resets' Comma? WS? { i }
+ 
+UnknownProtocolDrops<Int64>
+  = i:BigNumber WS? 'unknown protocol drops' Comma? WS? { i }
+
+Babbles<Int64>
+  = i:BigNumber WS? 'babbles' Comma? WS? { i }
+
+LateCollisions<Int64>
+  = i:BigNumber WS? 'late collision' Comma? WS? { i }
+
+Deferred<Int64>
+  = i:BigNumber WS? 'deferred' Comma? WS? { i }
+
+LostCarrier<Int64>
+  = i:BigNumber WS? 'lost carrier' Comma? WS? { i }
+
+NoCarrier<Int64>
+  = i:BigNumber WS? 'no carrier' Comma? WS? { i }
+  
+PauseOutput<Int64>
+  = i:BigNumber WS? 'pause output' Comma? WS? { i }
+
+OutputBufferFailures<Int64>
+  = i:BigNumber WS? 'output buffer failures' Comma? WS? { i }
+
+OutputBuffersSwappedOut<Int64>
+  = i:BigNumber WS? 'output buffers swapped out' Comma? WS? { i }
+  
+CarrierTransitions<Int64>
+  = i:BigNumber WS? 'carrier transitions' Comma? WS? { i }
+
+///////// Common bits
+  
+IPAddress<System.Net.IPAddress>
+ = i:(Octet '.' Octet '.' Octet '.' Octet) { System.Net.IPAddress.Parse(string.Concat(i)) }
+ 
+Octet
+ = '25' [0-5]
+ / '2' [0-4][0-9]
+ / [0-1][0-9][0-9]
+ / [0-9][0-9]?
+
+CiscoTimeSpan<TimeSpan>
+  = TimeHMSSpan
+  / ctp:CiscoTimePart+ { CiscoTimePartsToTimeSpan(ctp) }
+  / 'never' { new TimeSpan(0,0,0) }
+
+CiscoTimePart<int>
+  = n:Number u:[ywdhms] { CiscoTimeToSeconds(n, u) }
+
+TimeHMSSpan<TimeSpan>
+  = h:Number ':' m:Number ':' s:Number { new TimeSpan(h,m,s) }
+              
+MACAddress<System.Net.NetworkInformation.PhysicalAddress>
+  = i:(Hextet '.' Hextet '.' Hextet) { 
+		ParseCiscoMACAddress(i) 
+	}
+  
+Hextet
+  = HexDigit HexDigit HexDigit HexDigit
+ 
+HexDigit
+  = [0-9A-Fa-f]
+ 
+WS
+  = [ \t\r\n]+
+
+Number<int>
+  = i:[0-9]+ { Convert.ToInt32(string.Concat(i)) }
+ 
+BigNumber<Int64>
+  = i:[0-9]+ { Convert.ToInt64(string.Concat(i)) }
+
+CiscoPrompt
+  = [A-Za-z][A-Za-z0-9-_]*[#>]
+
+Comma
+  = ','
+
+EOF 
+  = !.

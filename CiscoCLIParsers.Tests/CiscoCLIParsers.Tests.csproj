@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Data\CiscoShowCDPEntryTest\C2811-15.1%284%29M12a.json" />
+    <None Remove="Data\CiscoShowCDPEntryTest\C2811-15.1%284%29M12a.txt" />
+    <None Remove="Data\CiscoShowCDPEntryTest\C2960G-15_0%281%29SE3.json" />
+    <None Remove="Data\CiscoShowCDPEntryTest\C2960G-15_0%281%29SE3.txt" />
+    <None Remove="Data\CiscoShowCDPEntryTest\C3750E-15_0%282%29SE2.json" />
+    <None Remove="Data\CiscoShowCDPEntryTest\C3750E-15_0%282%29SE2.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Data\CiscoShowCDPEntryTest\C2811-15.1(4)M12a.json" />
+    <EmbeddedResource Include="Data\CiscoShowCDPEntryTest\C2811-15.1(4)M12a.txt" />
+    <EmbeddedResource Include="Data\CiscoShowCDPEntryTest\C2960G-15_0(1)SE3.json" />
+    <EmbeddedResource Include="Data\CiscoShowCDPEntryTest\C2960G-15_0(1)SE3.txt" />
+    <EmbeddedResource Include="Data\CiscoShowCDPEntryTest\C3750E-15_0(2)SE2.json" />
+    <EmbeddedResource Include="Data\CiscoShowCDPEntryTest\C3750E-15_0(2)SE2.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
+    <PackageReference Include="xunit" Version="2.2.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CiscoCLIParsers\CiscoCLIParsers.csproj" />
+  </ItemGroup>
+
+</Project>

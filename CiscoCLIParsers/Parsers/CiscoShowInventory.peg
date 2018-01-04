@@ -1,0 +1,92 @@
+﻿@namespace CiscoCLIParsers.Parsers
+@classname CiscoShowInventory
+@using CiscoCLIParsers.Model
+
+/*
+ * Parser Rules
+ */
+
+inventory<List<ShowInventoryItem>>
+    =	CLICommand WS? items:inventoryItem* ciscoPrompt EOF {
+		new List<ShowInventoryItem>(items)
+	}
+    
+CLICommand
+	= Line* 'show inventory'
+	
+Line
+	= [^n]*[\n]
+
+inventoryItem<ShowInventoryItem>
+    = n:name WS? Comma WS? d:description WS? p:productId WS? Comma WS? v:vendorId WS? Comma WS? s:serialNumber WS? {
+		new ShowInventoryItem {
+			Name = n,
+			Description = d,
+			ProductId = p, 
+			VendorId = v,
+			SerialNumber = s
+		}
+	}
+    
+
+name
+    = Name WS? str:QuotedString { str }
+
+description
+    = Descr WS? str:QuotedString { str }
+    
+productId
+    = PID WS? str:String { str }
+    / PID { "" }
+
+vendorId
+    = VID WS? str:String { str }
+	/ VID { "" }
+
+serialNumber
+    = SN WS? str:String { str }
+	/ SN { "" }
+
+/*
+ * Lexer Rules
+ */
+
+WS
+    =   [ \t\r\n]+ 
+
+Comma
+    = ','   
+
+Name
+    = 'NAME:'
+
+Descr
+    = 'DESCR:'
+
+PID
+    = 'PID:'
+
+VID
+    = 'VID:'
+
+SN
+    = 'SN:'
+
+Quote
+	= '"'
+
+QuotedString
+    = Quote str:QuotedStringChars Quote { str }
+
+QuotedStringChars
+    = i:[^"]* { string.Concat(i) }
+
+String 
+    = i:([A-Z][A-Z0-9-/]+) { string.Concat(i) }
+
+ciscoPrompt
+	    = [A-Za-z][A-Za-z0-9-_]*[#>]
+
+EOF 
+	= !.
+	

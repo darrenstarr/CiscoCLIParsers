@@ -1,0 +1,125 @@
+-------------------------
+Device ID: dcsw1.nocturnal.local
+Entry address(es):
+  IP address: 10.100.1.1
+  IPv6 address: 2001:840:4B2B:101::1  (global unicast)
+  IPv6 address: FE80::2  (link-local)
+Platform: cisco WS-C3750X-48,  Capabilities: Router Switch IGMP
+Interface: GigabitEthernet0/24,  Port ID (outgoing port): GigabitEthernet1/0/10
+Holdtime : 140 sec
+
+Version :
+Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M), Version 15.0(2)SE2, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2013 by Cisco Systems, Inc.
+Compiled Tue 05-Feb-13 11:45 by prod_rel_team
+
+advertisement version: 2
+Protocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF0102250F000000000000588D09F3CA80FF0000
+VTP Management Domain: ''
+Native VLAN: 1
+Duplex: full
+Management address(es):
+  IP address: 10.100.1.1
+
+-------------------------
+Device ID: dcsw1.nocturnal.local
+Entry address(es):
+  IP address: 10.100.1.1
+  IPv6 address: 2001:840:4B2B:101::1  (global unicast)
+  IPv6 address: FE80::2  (link-local)
+Platform: cisco WS-C3750X-48,  Capabilities: Router Switch IGMP
+Interface: GigabitEthernet0/23,  Port ID (outgoing port): GigabitEthernet1/0/9
+Holdtime : 140 sec
+
+Version :
+Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M), Version 15.0(2)SE2, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2013 by Cisco Systems, Inc.
+Compiled Tue 05-Feb-13 11:45 by prod_rel_team
+
+advertisement version: 2
+Protocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF0102250F000000000000588D09F3CA80FF0000
+VTP Management Domain: ''
+Native VLAN: 1
+Duplex: full
+Management address(es):
+  IP address: 10.100.1.1
+
+-------------------------
+Device ID: NocturnalWC
+Entry address(es):
+  IP address: 10.100.1.16
+  IPv6 address: FE80::3ECE:73FF:FED9:8DAF  (link-local)
+Platform: AIR-CT2504-K9,  Capabilities: Host
+Interface: GigabitEthernet0/21,  Port ID (outgoing port): GigabitEthernet0/0/1
+Holdtime : 163 sec
+
+Version :
+Manufacturer's Name: Cisco Systems Inc.  Product Name: Cisco Controller  Product Version: 8.5.105.0  RTOS Version: Erro  Bootloader Version: 1.0.17  Build Type: DATA + WPS
+
+advertisement version: 2
+Duplex: full
+Management address(es):
+
+-------------------------
+Device ID: NocturnalWC
+Entry address(es):
+  IP address: 10.100.1.16
+  IPv6 address: FE80::3ECE:73FF:FED9:8DAF  (link-local)
+Platform: AIR-CT2504-K9,  Capabilities: Host
+Interface: GigabitEthernet0/22,  Port ID (outgoing port): GigabitEthernet0/0/2
+Holdtime : 163 sec
+
+Version :
+Manufacturer's Name: Cisco Systems Inc.  Product Name: Cisco Controller  Product Version: 8.5.105.0  RTOS Version: Erro  Bootloader Version: 1.0.17  Build Type: DATA + WPS
+
+advertisement version: 2
+Duplex: full
+Management address(es):
+
+-------------------------
+Device ID: AP6c20.5613.fc62
+Entry address(es):
+  IP address: 10.100.1.103
+  IPv6 address: 2001:840:4B2B:101:6E20:56FF:FE13:FC62  (global unicast)
+  IPv6 address: FE80::6E20:56FF:FE13:FC62  (link-local)
+Platform: cisco AIR-CAP1602E-E-K9,  Capabilities: Trans-Bridge Source-Route-Bridge IGMP
+Interface: GigabitEthernet0/11,  Port ID (outgoing port): GigabitEthernet0
+Holdtime : 143 sec
+
+Version :
+Cisco IOS Software, C1600 Software (AP1G2-K9W8-M), Version 15.3(3)JF1, RELEASE SOFTWARE (fc3)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2017 by Cisco Systems, Inc.
+Compiled Fri 20-Oct-17 21:09 by prod_rel_team
+
+advertisement version: 2
+Duplex: full
+Power drawn: 15.400 Watts
+Power request id: 1263, Power management id: 1
+Power request levels are:15400 13000 0 0 0
+Management address(es):
+  IP address: 10.100.1.103
+
+-------------------------
+Device ID: TORSW.minions.com
+Entry address(es):
+  IP address: 10.100.5.2
+Platform: cisco WS-C3560-24PS,  Capabilities: Router Switch IGMP
+Interface: GigabitEthernet0/12,  Port ID (outgoing port): FastEthernet0/24
+Holdtime : 157 sec
+
+Version :
+Cisco IOS Software, C3560 Software (C3560-IPSERVICESK9-M), Version 12.2(55)SE11, RELEASE SOFTWARE (fc3)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2016 by Cisco Systems, Inc.
+Compiled Wed 17-Aug-16 13:07 by prod_rel_team
+
+advertisement version: 2
+Protocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF010221FF0000000000000015F96DC200FF0000
+VTP Management Domain: ''
+Native VLAN: 1
+Duplex: full
+Management address(es):
+  IP address: 10.100.5.2

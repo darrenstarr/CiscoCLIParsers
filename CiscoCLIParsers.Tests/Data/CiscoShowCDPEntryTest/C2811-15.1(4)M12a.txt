@@ -1,0 +1,37 @@
+﻿-------------------------
+Device ID: r1234001.nm.local
+Entry address(es):
+  IP address: 172.20.2.2
+Platform: Cisco 1841,  Capabilities: Router Switch IGMP
+Interface: FastEthernet0/0,  Port ID (outgoing port): FastEthernet0/1
+Holdtime : 176 sec
+
+Version :
+Cisco IOS Software, 1841 Software (C1841-ADVENTERPRISEK9-M), Version 15.1(4)M12a, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2016 by Cisco Systems, Inc.
+Compiled Tue 04-Oct-16 03:13 by prod_rel_team
+
+advertisement version: 2
+VTP Management Domain: ''
+Duplex: full
+
+-------------------------
+Device ID: TORSW.minions.com
+Entry address(es):
+  IP address: 10.100.5.2
+Platform: cisco WS-C3560-24PS,  Capabilities: Router Switch IGMP
+Interface: FastEthernet0/1,  Port ID (outgoing port): FastEthernet0/1
+Holdtime : 157 sec
+
+Version :
+Cisco IOS Software, C3560 Software (C3560-IPSERVICESK9-M), Version 12.2(55)SE11, RELEASE SOFTWARE (fc3)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2016 by Cisco Systems, Inc.
+Compiled Wed 17-Aug-16 13:07 by prod_rel_team
+
+advertisement version: 2
+Protocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF010221FF0000000000000015F96DC200FF0000
+VTP Management Domain: ''
+Native VLAN: 1
+Duplex: full

@@ -1,0 +1,76 @@
+﻿@namespace CiscoCLIParsers.Parsers
+@using CiscoCLIParsers.Model
+@classname CiscoShowVLANBrief
+
+ShowVLAN<List<ShowVLANBriefItem>>
+ = CLICommand Heading vlans:VLAN* CiscoPrompt EOF { new List<ShowVLANBriefItem>(vlans) }
+ 
+CLICommand
+ = 'show vlan brief' WS? 
+ 
+Heading
+ = 'VLAN' WS 'Name' WS 'Status' WS 'Ports' WS '-'+ WS'-'+ WS'-'+ WS'-'+ WS
+ 
+VLAN<ShowVLANBriefItem>
+ = id:VLANID WS name:Name WS status:Status WS ports:Ports {
+     new ShowVLANBriefItem {
+       ID = id,
+       Name = name,
+       Status = status,
+       Ports = ports 
+     }
+   }
+ 
+VLANID<int>
+ = Number
+ 
+Name
+ = i:([0-9A-Za-z_\-]+) { string.Concat(i) }
+ 
+Status<EVLANStatus>
+ = 'active' { EVLANStatus.Active }
+ / 'act/unsup' { EVLANStatus.ActiveUnsupported }
+ / 'suspended' { EVLANStatus.Suspended }
+ / 'act/lshut' { EVLANStatus.ActiveLocallyShutdown }
+ / 'sus/lshut' { EVLANStatus.SuspendedLocallyShutdown }
+ / 'act/ishut' { EVLANStatus.ActiveInternallyShutdown }
+ / 'sus/ishut' { EVLANStatus.SuspectedInternallyShutdown }
+ 
+Ports<List<CiscoInterfaceId>>
+ = i:(Interface)* { new List<CiscoInterfaceId>(i) }
+ 
+Interface<CiscoInterfaceId>
+ = a:InterfacePrefix b:InterfaceId WS { new CiscoInterfaceId { InterfaceType = a, InterfaceNumber = b } }
+ / a:InterfacePrefix b:InterfaceId Comma WS { new CiscoInterfaceId { InterfaceType = a, InterfaceNumber = b } }
+ 
+InterfacePrefix<EInterfaceType>
+ = 'Et' { EInterfaceType.Ethernet }
+ / 'Eth' { EInterfaceType.Ethernet }
+ / 'Fa' { EInterfaceType.FastEthernet }
+ / 'Gi' { EInterfaceType.GigabitEthernet }
+ / 'Te' { EInterfaceType.TenGigabitEthernet }
+ 
+InterfaceId<CiscoInterfaceNumber>
+	= a:Number '/' b:Number '/' c:Number '/' d:Number { new CiscoInterfaceNumber { Chassis=a, LineCard=b, Module=c, Port=d } }
+	/ a:Number '/' b:Number '/' c:Number { new CiscoInterfaceNumber { LineCard=a, Module=b, Port=c } }
+	/ a:Number '/' b:Number { new CiscoInterfaceNumber { Module=a, Port=b } }
+	/ a:Number { new CiscoInterfaceNumber { Port=a } }
+ 
+Number<int>
+ = i:Digit+ { Convert.ToInt32(string.Concat(i)) }
+ 
+Digit
+ = [0-9]
+ 
+WS
+ = [ \t\r\n]+
+ 
+Comma
+ = ','
+ 
+CiscoPrompt
+	    = [A-Za-z][A-Za-z0-9-_]*[#>]
+
+EOF 
+	= !.
+	

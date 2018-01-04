@@ -1,0 +1,108 @@
+@namespace CiscoCLIParsers.Parsers
+@classname CiscoShowInterfaceStatus
+@using CiscoCLIParsers.Model
+
+ShowInterfaceStatus<List<ShowInterfaceStatusItem>>
+ = CLICommand Heading i:InterfaceStatus* { new List<ShowInterfaceStatusItem>(i) }
+ 
+CLICommand
+ = 'show interface status' WS? 
+
+Heading
+ = 'Port' WS? 'Name' WS? 'Status' WS ? 'Vlan' WS ? 'Duplex' WS ? 'Speed' WS ? 'Type' WS?
+
+// TODO : Come up with a better way of handling the fixed length name. This is ugly.
+InterfaceStatus<ShowInterfaceStatusItem>
+  = i:InterfaceID c:Connected p:PortVLAN ad:Auto? d:Duplex aus:Auto? s:Speed mt:EthernetPhysicalMediaType? WS? {
+    new ShowInterfaceStatusItem {
+		Interface = i,
+		ConnectionState = c,
+		Type = p.Type,
+		VlanId = p.VlanId,
+		AutoDuplex = ad.Count > 0 || d == EDuplex.Auto,
+		Duplex = d,
+		AutoSpeed = aus.Count > 0,
+		Speed = s,
+		MediaType = mt.Count > 0 ? mt[0] : EEthernetMediaType.Unknown
+	}
+  }
+  / i:InterfaceID n:Name c:Connected p:PortVLAN ad:Auto? d:Duplex aus:Auto? s:Speed mt:EthernetPhysicalMediaType? WS? {
+    new ShowInterfaceStatusItem {
+		Interface = i,
+		Description = n,
+		ConnectionState = c,
+		Type = p.Type,
+		VlanId = p.VlanId,
+		AutoDuplex = ad.Count > 0 || d == EDuplex.Auto,
+		Duplex = d,
+		AutoSpeed = aus.Count > 0,
+		Speed = s,
+		MediaType = mt.Count > 0 ? mt[0] : EEthernetMediaType.Unknown
+	}
+  }
+ 
+InterfaceID<CiscoInterfaceId>
+  = a:InterfaceType b:InterfaceNumber c:ChannelNumber? d:SubinterfaceNumber? { Common.Helpers.ToCiscoInterfaceId(a, b, c, d) }
+
+InterfaceType<EInterfaceType>
+  = 'Et' 'hernet'? { EInterfaceType.Ethernet }
+  / 'Fa' 'stEthernet'? { EInterfaceType.FastEthernet }
+  / 'Gi' 'gabitEthernet'? { EInterfaceType.GigabitEthernet }
+  / 'Te' 'nGigabitEthernet'? { EInterfaceType.TenGigabitEthernet }
+  / 'Po' 'rt-channel'? { EInterfaceType.PortChannel }
+
+InterfaceNumber<CiscoInterfaceNumber>
+	= a:Number '/' b:Number '/' c:Number '/' d:Number { new CiscoInterfaceNumber { Chassis=a, LineCard=b, Module=c, Port=d } }
+	/ a:Number '/' b:Number '/' c:Number { new CiscoInterfaceNumber { LineCard=a, Module=b, Port=c } }
+	/ a:Number '/' b:Number { new CiscoInterfaceNumber { Module=a, Port=b } }
+	/ a:Number { new CiscoInterfaceNumber { Port=a } }
+  	
+SubinterfaceNumber<int>
+  = '.' i:Number { i }
+
+ChannelNumber<int>
+  = ':' i:Number { i }
+
+Name
+  = n:(..................) WS { n.Trim() }
+  
+Connected<EConnectionState>
+ = 'connected' WS { EConnectionState.Connected }
+ / 'notconnect' WS { EConnectionState.NotConnected }
+ / 'disabled' WS { EConnectionState.Disabled }
+  
+PortVLAN<PortVLAN>
+ = 'trunk' WS { new PortVLAN { Type=ESwitchportMode.Trunk, VlanId=-1 } }
+ / 'routed' WS { new PortVLAN { Type=ESwitchportMode.Routed, VlanId=-1 } }
+ / 'unassigned' WS { new PortVLAN { Type=ESwitchportMode.Unassigned, VlanId=-1 } }
+ / n:Number WS { new PortVLAN { Type=ESwitchportMode.Access, VlanId=n } }
+ 
+Auto
+ = 'a-'
+ 
+Duplex<EDuplex>
+ = 'auto' WS { EDuplex.Auto }
+ / 'full' WS { EDuplex.Full }
+ / 'half' WS { EDuplex.Half}
+  
+Speed<Int64>
+ = '10' WS { 10000000 }
+ / '100' WS { 100000000 }
+ / '1000' WS { 1000000000 }
+ / '10G' WS { 10000000000 }
+ / '40G' WS { 40000000000 }
+ / '100G' WS { 100000000000 }
+ / 'auto' WS { -1 }
+ 
+EthernetPhysicalMediaType<EEthernetMediaType>
+  = '10/100/1000BaseTX' { EEthernetMediaType.TenHundredGig }
+  / 'Not Present' { EEthernetMediaType.NotPresent }
+  / 'SFP-10GBase-CX1' { EEthernetMediaType.SFP10GBaseCX1 }
+  / 'unknown' { EEthernetMediaType.Unknown }
+
+WS
+  = [ \t\r\n]+
+
+Number<int>
+  = i:[0-9]+ { Convert.ToInt32(string.Concat(i)) }
+
