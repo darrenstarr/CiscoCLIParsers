@@ -22,3 +22,17 @@ cases being found in the way that IOS devices produce output.
 
 Updated unit tests (via unit test) or simply command line output (via GitHub issues) are very welcome.
 As more data is pushed through the library, the higher the quality of the output produced.
+
+### Supported functions
+
+| Command                 | Implemented | Unit Tests |
+|-------------------------|-------------| -----------|
+| show cdp entry *        | yes         | yes        |
+| show interfaces         | preliminary | no         |
+| show interface status   | preliminary | no         |
+| show inventory          | preliminary | no         |
+| show ip arp             | preliminary | no         |
+| show ip interface       | preliminary | no         |
+| show ip interface brief | preliminary | no         |
+| show ip route           | preliminary | no         |
+| show vlan brief         | preliminary | no         |
