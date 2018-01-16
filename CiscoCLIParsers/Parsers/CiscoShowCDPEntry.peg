@@ -84,6 +84,7 @@ Capability <ECDPCapability>
  / 'Trans-Bridge' WS? { ECDPCapability.TransBridge }
  / 'CVTA' WS? { ECDPCapability.CVTA }
  / 'phone' WS? { ECDPCapability.Phone }
+ / 'Phone' WS? { ECDPCapability.Phone }
  / 'port' WS? { ECDPCapability.Port }
  / 'Host' WS? { ECDPCapability.Host }
  

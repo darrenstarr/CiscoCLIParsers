@@ -1,0 +1,182 @@
+﻿[
+  {
+    "DeviceID": "SEP0062ECB167F0",
+    "EntryAddresses": [
+      "10.224.90.12"
+    ],
+    "Platform": "Platform: CTS-CODEC-inTouch G2",
+    "Capabilities": [
+      "Host",
+      "Phone"
+    ],
+    "Interface": "FastEthernet0/42",
+    "PortId": "eth0",
+    "HoldTime": 128,
+    "VersionText": "ti8.2.2 3263c59 2016-09-26\r\n",
+    "AdvertisementVersion": 2,
+    "AdvertisementExtras": [
+      {
+        "ManagementIPAddresses": []
+      }
+    ]
+  },
+  {
+    "DeviceID": "SEPF8B7E2045FAC",
+    "EntryAddresses": [],
+    "Platform": "Platform: CTS-CODEC-SX10",
+    "Capabilities": [
+      "Host",
+      "Phone"
+    ],
+    "Interface": "FastEthernet0/44",
+    "PortId": "eth0",
+    "HoldTime": 160,
+    "VersionText": "ce8.2.2 3263c59 2016-09-26\r\n",
+    "AdvertisementVersion": 2,
+    "AdvertisementExtras": [
+      {
+        "ManagementIPAddresses": []
+      }
+    ]
+  },
+  {
+    "DeviceID": "W0238-01-005",
+    "EntryAddresses": [
+      "6.218.85.112"
+    ],
+    "Platform": "Platform: cisco AIR-AP1832I-E-K9",
+    "Capabilities": [
+      "Router",
+      "TransBridge"
+    ],
+    "Interface": "FastEthernet0/46",
+    "PortId": "GigabitEthernet0",
+    "HoldTime": 127,
+    "VersionText": "Cisco AP Software, ap1g4-k9w8 Version: 8.3.133.0\r\nTechnical Support: http://www.cisco.com/techsupport\r\nCopyright (c) 2014-2015 by Cisco Systems, Inc.\r\n",
+    "AdvertisementVersion": 2,
+    "AdvertisementExtras": [
+      {
+        "ManagementIPAddresses": [
+          "6.218.85.112"
+        ]
+      }
+    ]
+  },
+  {
+    "DeviceID": "W0238-01-003",
+    "EntryAddresses": [
+      "6.168.20.184"
+    ],
+    "Platform": "Platform: cisco AIR-AP1832I-E-K9",
+    "Capabilities": [
+      "Router",
+      "TransBridge"
+    ],
+    "Interface": "FastEthernet0/43",
+    "PortId": "GigabitEthernet0",
+    "HoldTime": 130,
+    "VersionText": "Cisco AP Software, ap1g4-k9w8 Version: 8.3.133.0\r\nTechnical Support: http://www.cisco.com/techsupport\r\nCopyright (c) 2014-2015 by Cisco Systems, Inc.\r\n",
+    "AdvertisementVersion": 2,
+    "AdvertisementExtras": [
+      {
+        "ManagementIPAddresses": [
+          "6.168.20.184"
+        ]
+      }
+    ]
+  },
+  {
+    "DeviceID": "W0238-01-002",
+    "EntryAddresses": [
+      "6.224.17.200"
+    ],
+    "Platform": "Platform: cisco AIR-AP1832I-E-K9",
+    "Capabilities": [
+      "Router",
+      "TransBridge"
+    ],
+    "Interface": "FastEthernet0/45",
+    "PortId": "GigabitEthernet0",
+    "HoldTime": 140,
+    "VersionText": "Cisco AP Software, ap1g4-k9w8 Version: 8.3.133.0\r\nTechnical Support: http://www.cisco.com/techsupport\r\nCopyright (c) 2014-2015 by Cisco Systems, Inc.\r\n",
+    "AdvertisementVersion": 2,
+    "AdvertisementExtras": [
+      {
+        "Name": "power drawn",
+        "Value": "Power drawn: 15.400 Watts\r\n"
+      },
+      {
+        "Name": "power request and management",
+        "Value": "Power request id: 63898, Power management id: 2\r\n"
+      },
+      {
+        "Name": "power request levels",
+        "Value": "Power request levels are:17900 15400 0 0 0 \r\n"
+      },
+      {
+        "ManagementIPAddresses": [
+          "6.224.17.200"
+        ]
+      }
+    ]
+  },
+  {
+    "DeviceID": "W0238-01-001",
+    "EntryAddresses": [
+      "6.168.18.72"
+    ],
+    "Platform": "Platform: cisco AIR-AP1832I-E-K9",
+    "Capabilities": [
+      "Router",
+      "TransBridge"
+    ],
+    "Interface": "FastEthernet0/47",
+    "PortId": "GigabitEthernet0",
+    "HoldTime": 72,
+    "VersionText": "Cisco AP Software, ap1g4-k9w8 Version: 8.3.133.0\r\nTechnical Support: http://www.cisco.com/techsupport\r\nCopyright (c) 2014-2015 by Cisco Systems, Inc.\r\n",
+    "AdvertisementVersion": 2,
+    "AdvertisementExtras": [
+      {
+        "ManagementIPAddresses": [
+          "6.168.18.72"
+        ]
+      }
+    ]
+  },
+  {
+    "DeviceID": "L0238011a.nm.local",
+    "EntryAddresses": [
+      "10.192.90.11"
+    ],
+    "Platform": "Platform: cisco WS-C2960+48PST-L",
+    "Capabilities": [
+      "Switch",
+      "IGMP"
+    ],
+    "Interface": "FastEthernet0/48",
+    "PortId": "GigabitEthernet0/4",
+    "HoldTime": 137,
+    "VersionText": "Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 15.0(2)SE8, RELEASE SOFTWARE (fc1)\r\nTechnical Support: http://www.cisco.com/techsupport\r\nCopyright (c) 1986-2015 by Cisco Systems, Inc.\r\nCompiled Thu 14-May-15 02:39 by prod_rel_team\r\n",
+    "AdvertisementVersion": 2,
+    "AdvertisementExtras": [
+      {
+        "Name": "protocol hello",
+        "Value": "Protocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF010221FF00000000000000A2897D1180FF0000\r\n"
+      },
+      {
+        "VTPManagementDomain": "nav"
+      },
+      {
+        "NativeVLAN": 1
+      },
+      {
+        "Duplex": "Full"
+      },
+      {
+        "ManagementIPAddresses": [
+          "10.192.90.11"
+        ]
+      }
+    ]
+  }
+]

@@ -13,6 +13,8 @@
     <None Remove="Data\CiscoShowCDPEntryTest\C2960G-15_0%281%29SE3.txt" />
     <None Remove="Data\CiscoShowCDPEntryTest\c2960plus.json" />
     <None Remove="Data\CiscoShowCDPEntryTest\c2960plus.txt" />
+    <None Remove="Data\CiscoShowCDPEntryTest\c3560_48.json" />
+    <None Remove="Data\CiscoShowCDPEntryTest\c3560_48.txt" />
     <None Remove="Data\CiscoShowCDPEntryTest\C3750E-15_0%282%29SE2.json" />
     <None Remove="Data\CiscoShowCDPEntryTest\C3750E-15_0%282%29SE2.txt" />
   </ItemGroup>
@@ -24,6 +26,8 @@
     <EmbeddedResource Include="Data\CiscoShowCDPEntryTest\C2960G-15_0(1)SE3.txt" />
     <EmbeddedResource Include="Data\CiscoShowCDPEntryTest\c2960plus.json" />
     <EmbeddedResource Include="Data\CiscoShowCDPEntryTest\c2960plus.txt" />
+    <EmbeddedResource Include="Data\CiscoShowCDPEntryTest\c3560_48.json" />
+    <EmbeddedResource Include="Data\CiscoShowCDPEntryTest\c3560_48.txt" />
     <EmbeddedResource Include="Data\CiscoShowCDPEntryTest\C3750E-15_0(2)SE2.json" />
     <EmbeddedResource Include="Data\CiscoShowCDPEntryTest\C3750E-15_0(2)SE2.txt" />
   </ItemGroup>

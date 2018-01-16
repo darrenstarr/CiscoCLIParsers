@@ -1,0 +1,119 @@
+﻿-------------------------
+Device ID: SEP0062ECB167F0
+Entry address(es): 
+  IP address: 10.224.90.12
+Platform: CTS-CODEC-inTouch G2,  Capabilities: Host Phone 
+Interface: FastEthernet0/42,  Port ID (outgoing port): eth0
+Holdtime : 128 sec
+
+Version :
+ti8.2.2 3263c59 2016-09-26
+
+advertisement version: 2
+Management address(es): 
+
+-------------------------
+Device ID: SEPF8B7E2045FAC
+Entry address(es): 
+Platform: CTS-CODEC-SX10,  Capabilities: Host Phone 
+Interface: FastEthernet0/44,  Port ID (outgoing port): eth0
+Holdtime : 160 sec
+
+Version :
+ce8.2.2 3263c59 2016-09-26
+
+advertisement version: 2
+Management address(es): 
+
+-------------------------
+Device ID: W0238-01-005
+Entry address(es): 
+  IP address: 6.218.85.112
+Platform: cisco AIR-AP1832I-E-K9,  Capabilities: Router Trans-Bridge 
+Interface: FastEthernet0/46,  Port ID (outgoing port): GigabitEthernet0
+Holdtime : 127 sec
+
+Version :
+Cisco AP Software, ap1g4-k9w8 Version: 8.3.133.0
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 2014-2015 by Cisco Systems, Inc.
+
+advertisement version: 2
+Management address(es): 
+  IP address: 6.218.85.112
+
+-------------------------
+Device ID: W0238-01-003
+Entry address(es): 
+  IP address: 6.168.20.184
+Platform: cisco AIR-AP1832I-E-K9,  Capabilities: Router Trans-Bridge 
+Interface: FastEthernet0/43,  Port ID (outgoing port): GigabitEthernet0
+Holdtime : 130 sec
+
+Version :
+Cisco AP Software, ap1g4-k9w8 Version: 8.3.133.0
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 2014-2015 by Cisco Systems, Inc.
+
+advertisement version: 2
+Management address(es): 
+  IP address: 6.168.20.184
+
+-------------------------
+Device ID: W0238-01-002
+Entry address(es): 
+  IP address: 6.224.17.200
+Platform: cisco AIR-AP1832I-E-K9,  Capabilities: Router Trans-Bridge 
+Interface: FastEthernet0/45,  Port ID (outgoing port): GigabitEthernet0
+Holdtime : 140 sec
+
+Version :
+Cisco AP Software, ap1g4-k9w8 Version: 8.3.133.0
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 2014-2015 by Cisco Systems, Inc.
+
+advertisement version: 2
+Power drawn: 15.400 Watts
+Power request id: 63898, Power management id: 2
+Power request levels are:17900 15400 0 0 0 
+Management address(es): 
+  IP address: 6.224.17.200
+
+-------------------------
+Device ID: W0238-01-001
+Entry address(es): 
+  IP address: 6.168.18.72
+Platform: cisco AIR-AP1832I-E-K9,  Capabilities: Router Trans-Bridge 
+Interface: FastEthernet0/47,  Port ID (outgoing port): GigabitEthernet0
+Holdtime : 72 sec
+
+Version :
+Cisco AP Software, ap1g4-k9w8 Version: 8.3.133.0
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 2014-2015 by Cisco Systems, Inc.
+
+advertisement version: 2
+Management address(es): 
+  IP address: 6.168.18.72
+
+-------------------------
+Device ID: L0238011a.nm.local
+Entry address(es): 
+  IP address: 10.192.90.11
+Platform: cisco WS-C2960+48PST-L,  Capabilities: Switch IGMP 
+Interface: FastEthernet0/48,  Port ID (outgoing port): GigabitEthernet0/4
+Holdtime : 137 sec
+
+Version :
+Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 15.0(2)SE8, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2015 by Cisco Systems, Inc.
+Compiled Thu 14-May-15 02:39 by prod_rel_team
+
+advertisement version: 2
+Protocol Hello:  OUI=0x00000C, Protocol ID=0x0112; payload len=27, value=00000000FFFFFFFF010221FF00000000000000A2897D1180FF0000
+VTP Management Domain: 'nav'
+Native VLAN: 1
+Duplex: full
+Management address(es): 
+  IP address: 10.192.90.11
