@@ -1,0 +1,36 @@
+﻿[
+  {
+    "DeviceID": "r0238001.nm.local",
+    "EntryAddresses": [
+      "10.192.90.1"
+    ],
+    "Platform": "Platform: cisco ISR4321/K9",
+    "Capabilities": [
+      "Router",
+      "Switch",
+      "IGMP"
+    ],
+    "Interface": "GigabitEthernet0/3",
+    "PortId": "GigabitEthernet0/0/0.3",
+    "HoldTime": 171,
+    "VersionText": "Cisco IOS Software, ISR Software (X86_64_LINUX_IOSD-UNIVERSALK9-M), Version 15.5(3)S4b, RELEASE SOFTWARE (fc1)\r\nTechnical Support: http://www.cisco.com/techsupport\r\nCopyright (c) 1986-2016 by Cisco Systems, Inc.\r\nCompiled Mon 17-Oct-16 20:23 by mcpre\r\n",
+    "AdvertisementVersion": 2,
+    "AdvertisementExtras": [
+      {
+        "VTPManagementDomain": ""
+      },
+      {
+        "Duplex": "Full"
+      },
+      {
+        "Name": "power available",
+        "Value": "Power Available TLV:\r\n\r\n    Power request id: 0, Power management id: 1, Power available: 0, Power management level: -1\r\n"
+      },
+      {
+        "ManagementIPAddresses": [
+          "10.192.90.1"
+        ]
+      }
+    ]
+  }
+]

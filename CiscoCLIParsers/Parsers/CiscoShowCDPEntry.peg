@@ -89,10 +89,10 @@ Capability <ECDPCapability>
  
 // TODO : This is a Cisco interface, parse it properly
 Interface
- = 'Interface:' WS? intf:([A-Za-z][A-Za-z0-9/]+) WS? { intf }
+ = 'Interface:' WS? intf:([A-Za-z][A-Za-z0-9/]+(.[0-9]+)?) WS? { intf }
  
 PortID
- = 'Port ID (outgoing port):' WS? portId:([A-Za-z][A-Za-z0-9/]+) WS? { portId }
+ = 'Port ID (outgoing port):' WS? portId:([A-Za-z][A-Za-z0-9/]+(.[0-9]+)?) WS? { portId }
  
 // TODO : handle holdtime stuff nicer
 HoldTime<int>

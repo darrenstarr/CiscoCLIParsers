@@ -1,0 +1,22 @@
+﻿-------------------------
+Device ID: r0238001.nm.local
+Entry address(es): 
+  IP address: 10.192.90.1
+Platform: cisco ISR4321/K9,  Capabilities: Router Switch IGMP 
+Interface: GigabitEthernet0/3,  Port ID (outgoing port): GigabitEthernet0/0/0.3
+Holdtime : 171 sec
+
+Version :
+Cisco IOS Software, ISR Software (X86_64_LINUX_IOSD-UNIVERSALK9-M), Version 15.5(3)S4b, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2016 by Cisco Systems, Inc.
+Compiled Mon 17-Oct-16 20:23 by mcpre
+
+advertisement version: 2
+VTP Management Domain: ''
+Duplex: full
+Power Available TLV:
+
+    Power request id: 0, Power management id: 1, Power available: 0, Power management level: -1
+Management address(es): 
+  IP address: 10.192.90.1

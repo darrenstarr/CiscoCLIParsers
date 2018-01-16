@@ -84,5 +84,14 @@ namespace CiscoCLIParsers.Tests
 
             return;
         }
+
+        [Fact]
+        public void C2960Plus()
+        {
+            var resourceName = "c2960plus";
+            Assert.True(ShowCDPEntryParses(resourceName));
+
+            return;
+        }
     }
 }
